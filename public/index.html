@@ -29,7 +29,7 @@
 
   
   
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -63,9 +63,9 @@
 
 
 
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+<link href="/blog/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -77,7 +77,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.2" />
 
 
 
@@ -144,7 +144,7 @@
   
 
   <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
+    <a href="/blog/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
       <span class="site-title">Hexo</span>
       <span class="logo-line-after"><i></i></span>
@@ -169,27 +169,27 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/blog/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/blog/archives" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/blog/tags" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -236,8 +236,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/10/17/萌萌的第一天/" itemprop="url">
-                  萌萌的第一天
+                <a class="post-title-link" href="/blog/2017/08/03/webpack2编译过程最佳实践/" itemprop="url">
+                  webpack2编译过程最佳实践
                 </a>
               
             
@@ -249,9 +249,9 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-10-17T21:08:11+08:00" content="2016-10-17">
-              2016-10-17
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:56:13+08:00" content="2017-08-03">
+              2017-08-03
             </time>
           </span>
 
@@ -280,7 +280,14 @@
       
         
           
-            <p>这里面还什么都没有，占个坑先！</p>
+            <p>背景<br>构建一个项目的时候往往需要第三方库与插件分离，因为第三方库并不需要经常更新，被浏览器缓存可以提高项目的加载速度</p>
+<p>CommonsChunkPlugin</p>
+<p>webpack2 支持第三方第三方库与项目源码分别打包，通过CommonsChunkPlugin 可以把共享的模块单独打包出来，通过将公共模块与软件包分开，生成的块文件可以初始加载并存储在缓存中供以后使用。这样浏览器可以从缓存快速提供共享代码，而不是在访问新页面时强制加载更大的包。<br>commonsChunkPlugin配置第三方模块的代码示例如下：<br>new webpack.optimize.CommonsChunkPlugin({<br>  name: “commons”,<br>  filename: “commons.js”,<br>})</p>
+<p>但是在开发中并不需要时时打包commons模块，每次修改代码时热起项目都会把commons重新打包，这样没有意义并且会拖慢打包速度，因此最好的结果是commons的打包过程与源码分离，并单独打包</p>
+<p>DllPlugin<br>DllPlugin将commons模块单独打包，并且输出一个dll文件，dll文件作为依赖不会单独存在，他只包含第三发模块，合并的commons通过output.libery选项把function暴露给全局作用域，并生成manifest映射文件</p>
+<p>DllReferencePlugin<br>引用一个打包完成的dll文件，通过manifest把名称映射到dll函数可访问的ID模块</p>
+<p>打包过程<br>开发环境<br>开发环境下，先由dll打包公共模块，再由dev打包源码，并把dll映射载入，这样每次修改源码，webpack只打包修改的部分，大大节省了编译时间<br>构建环境<br>由CommonsChunkPlugin打包公共模块</p>
+<p>对比<br>dll编译过程<br><img src="/blog/2017/08/03/webpack2编译过程最佳实践/PastedGraphic1.jpg" alt="PastedGraphic1" title="PastedGraphic1"><br>打包源码过程<br><img src="/blog/2017/08/03/webpack2编译过程最佳实践/PastedGraphic2.jpg" alt="PastedGraphic2" title="PastedGraphic2"><br>通过CommonsChunkPlugin打包过程<br><img src="/blog/2017/08/03/webpack2编译过程最佳实践/PastedGraphic3.jpg" alt="PastedGraphic3" title="PastedGraphic3"><br>由上可知，在两边的vendor文件同样大小的情况下，DllPlugin每次编译时间是CommonsChunkPlugin 1/3左右，刨除dll单独打包时间影响，再只改动源码的条件下，DllPlugin编译时间约为CommonsChunkPlugin 1/10</p>
 
           
         
@@ -330,7 +337,1581 @@
             
               
                 
-                <a class="post-title-link" href="/2016/10/17/hello-world/" itemprop="url">
+                <a class="post-title-link" href="/blog/2017/08/03/使用css构造等比例布局/" itemprop="url">
+                  使用css构造等比例布局
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:46:13+08:00" content="2017-08-03">
+              2017-08-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="css等比例图片"><a href="#css等比例图片" class="headerlink" title="css等比例图片"></a>css等比例图片</h3><h5 id="神奇的margin-top"><a href="#神奇的margin-top" class="headerlink" title="神奇的margin-top:"></a>神奇的margin-top:</h5><p><a href="http://www.songxuemeng.com/vue-demo/demo/css/margin-top.html" target="_blank" rel="external">http://www.songxuemeng.com/vue-demo/demo/css/margin-top.html</a></p>
+<p>margin-top是根据父元素的宽度来进行计算的</p>
+<h5 id="等比例less"><a href="#等比例less" class="headerlink" title="等比例less"></a>等比例less</h5><pre><code>.aspect-ratio(@width, @height) {
+position: relative;
+&amp;:before {
+ display: block;
+ content: &quot;&quot;;
+ width: 100%;
+ padding-top: (@height / @width) * 100%;
+}
+&gt; .content {
+ position: absolute;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+}
+}
+</code></pre><h5 id="制作等比例图片"><a href="#制作等比例图片" class="headerlink" title="制作等比例图片"></a>制作等比例图片</h5><p><a href="http://www.songxuemeng.com/vue-demo/demo/css/ratio-image.html" target="_blank" rel="external">http://www.songxuemeng.com/vue-demo/demo/css/ratio-image.html</a></p>
+<pre><code>.aspect-ratio(1, 1);
+        .content{
+          background-repeat: no-repeat;
+          text-align: center;
+        }
+</code></pre><h4 id="使用margin-top保持间隙"><a href="#使用margin-top保持间隙" class="headerlink" title="使用margin-top保持间隙"></a>使用margin-top保持间隙</h4><p><a href="http://www.songxuemeng.com/vue-demo/demo/css/space-image.html" target="_blank" rel="external">http://www.songxuemeng.com/vue-demo/demo/css/space-image.html</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/2017/08/03/深入解析Vue源码/" itemprop="url">
+                  深入解析Vue源码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:37:25+08:00" content="2017-08-03">
+              2017-08-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Vue简介"><a href="#Vue简介" class="headerlink" title="Vue简介"></a>Vue简介</h3><p>响应式编程 路由<br>组件化 稳定性<br>模块化 动画</p>
+<p>数据绑定</p>
+<pre><code>/**
+*假设有这么两个钟东西
+**/
+//数据
+var object = {
+  message: &apos;Hello World!&apos;
+}
+//DOM
+&lt;div id=&quot;example&quot;&gt;
+  {{ message }}
+&lt;/div&gt;
+
+/**
+*我们可以这么写
+**/
+
+
+new Vue({
+  el: &apos;#example&apos;,
+  data: object
+})
+
+/**
+* 如果有个数据
+**/
+
+var object1 = {
+  message: &apos;Hello World!&apos;
+}
+
+var object2 = {
+  message: &apos;Hello World!&apos;
+}
+
+//DOM
+&lt;div id=&quot;example1&quot;&gt;
+  {{ message }}
+&lt;/div&gt;
+
+&lt;div id=&quot;example2&quot;&gt;
+  {{ message }}
+&lt;/div&gt;
+
+/**
+*我们还可以这么写
+**/
+
+var vm1 = new Vue({el: &apos;#example1&apos;,data: object})
+//改变vm1的数据DOM随之改变
+vm2.message = &apos;oliver&apos;
+
+var vm2 = new Vue({el: &apos;#example2&apos;,data: object})
+
+vm2.message = &apos;lisa&apos;
+</code></pre><p>组件化<br>    var Example = Vue.extend({<br>    template: ‘<div></div>‘,<br>    data: function () {<br>    return {<br>      message: ‘Hello Vue.js!’<br>    }<br>    }<br>    })</p>
+<pre><code>// 将该组件注册为 &lt;example&gt; 标签
+Vue.component(&apos;example&apos;, Example)
+
+Vue 在组件化上和 React 类似：一切都是组件。
+组件使用上也和React一致:
+
+&lt;example&gt;&lt;/example&gt;
+</code></pre><p>组件之间数据传递:<br>    1.用 props 来定义如何接收外部数据;<br>    Vue.component(‘child’, {<br>      // 声明 props<br>      props: [‘msg’],<br>      // prop 可以用在模板内<br>      // 可以用 <code>this.msg</code> 设置<br>      template: ‘<span></span>‘<br>    })<br>    <child msg="hello!"></child></p>
+<pre><code>2.用自定义事件来向外传递消息;
+使用 $on() 监听事件；
+使用 $emit() 在它上面触发事件；
+使用 $dispatch() 派发事件，事件沿着父链冒泡；
+使用 $broadcast() 广播事件，事件向下传导给所有的后代。
+
+3.用 &lt;slot&gt; API 来将外部动态传入的内容（其他组件或是 HTML）和自身模板进行组合;
+</code></pre><p>模块化</p>
+<pre><code>Webpack 或者 Browserify，然后再加上 ES2015配合 vue-loader 或是 vueify，就可以把Vue的每一个组件变成
+Web Components
+
+&lt;!-- MyComponent.vue --&gt;
+
+&lt;!-- css --&gt;
+&lt;style&gt;
+.message {
+  color: red;
+}
+&lt;/style&gt;
+
+&lt;!-- template --&gt;
+&lt;template&gt;
+  &lt;div class=&quot;message&quot;&gt;{{ message }}&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;!-- js --&gt;
+&lt;script&gt;
+export default {
+  props: [&apos;message&apos;],
+  created() {
+    console.log(&apos;MyComponent created!&apos;)
+  }
+}
+&lt;/script&gt;
+</code></pre><p>路由</p>
+<pre><code>使用Vue重构的Angular项目
+
+www.songxuemeng.com/diary
+
+个人感觉vue-router烦的问题是组件之间的数据交互,rootRouter的数据很难向其他组件传递.
+
+/**
+*解决方法
+**/
+var app = Vue.extend({
+  data:function(){
+      return {
+          data:&apos;&apos;,
+      };
+  },
+});
+router.map({
+      &apos;/&apos;: {
+          component:  Vue.extend({
+                            mixins: [calendar.mixin],
+                            data:function(){
+                                return {
+                                    data:data
+                                }
+                            }
+                      })
+      },
+  })
+router.start(app, &apos;#app&apos;);
+</code></pre><p>###Vue源码分析</p>
+<p><a href="http://img2.tbcdn.cn/L1/461/1/8142ef3fc2055839f1a93a933d80e17694b4f76b" target="_blank" rel="external">http://img2.tbcdn.cn/L1/461/1/8142ef3fc2055839f1a93a933d80e17694b4f76b</a></p>
+<p>Vue.js是一个典型的MVVM的程序结构，程序大体可以分为：<br>全局设计：包括全局接口、默认选项等；<br>vm实例设计：包括接口(vm原形)、实例初始化过程(vm构造函数)</p>
+<p>下面是构造函数最核心的工作内容。</p>
+<p><a href="http://img3.tbcdn.cn/L1/461/1/00049a09def4aff8d80f3bb7229e3f6d395426fb" target="_blank" rel="external">http://img3.tbcdn.cn/L1/461/1/00049a09def4aff8d80f3bb7229e3f6d395426fb</a></p>
+<p>整个实例初始化的过程中，重中之重就是把数据 (Model) 和视图 (View) 建立起关联关系。Vue.js 和诸多 MVVM 的思路是类似的，主要做了三件事：</p>
+<p>通过 observer 对 data 进行了监听，并且提供订阅某个数据项的变化的能力<br>把 template 解析成一段 document fragment，然后解析其中的 directive，得到每一个 directive 所依赖的数据项及其更新方法。比如 v-text=”message” 被解析之后；<br>所依赖的数据项 this.$data.message，以及<br>相应的视图更新方法 node.textContent = this.$data.message<br>通过 watcher 把上述两部分结合起来，即把 directive 中的数据依赖订阅在对应数据的 observer 上，这样当数据变化的时候，就会触发 observer，进而触发相关依赖对应的视图更新方法，最后达到模板原本的关联效果。<br>所以整个 vm 的核心，就是如何实现 observer, directive (parser), watcher 这三样东西</p>
+<p>####vue文件结构</p>
+<p><a href="http://img4.tbcdn.cn/L1/461/1/cb73a147451157e52500734c0d31665a9540adae" target="_blank" rel="external">http://img4.tbcdn.cn/L1/461/1/cb73a147451157e52500734c0d31665a9540adae</a></p>
+<p>####数据列表的更新</p>
+<p>视图更新效率的焦点问题主要在于大列表的更新和深层数据更新这两方面.</p>
+<p>但是工作中经常用的主要是前者</p>
+<p>首先 diff(data, oldVms) 这个函数的注释对整个比对更新机制做了个简要的阐述，大概意思是先比较新旧两个列表的 vm 的数据的状态，然后差量更新 DOM。</p>
+<p>第一步：便利新列表里的每一项，如果该项的 vm 之前就存在，则打一个 _reused 的标，如果不存在对应的 vm，则创建一个新的。</p>
+<pre><code>for (i = 0, l = data.length; i &lt; l; i++) {
+        item = data[i];
+        key = convertedFromObject ? item.$key : null;
+        value = convertedFromObject ? item.$value : item;
+        primitive = !isObject(value);
+        frag = !init &amp;&amp; this.getCachedFrag(value, i, key);
+        if (frag) {
+          // reusable fragment如果存在打上usered
+          frag.reused = true;
+          // update $index
+          frag.scope.$index = i;
+          // update $key
+          if (key) {
+            frag.scope.$key = key;
+          }
+          // update iterator
+          if (iterator) {
+            frag.scope[iterator] = key !== null ? key : i;
+          }
+          // update data for track-by, object repeat &amp;
+          // primitive values.
+          if (trackByKey || convertedFromObject || primitive) {
+            frag.scope[alias] = value;
+          }
+        } else {
+          // new isntance如果不存在就新建一个
+          frag = this.create(value, alias, i, key);
+          frag.fresh = !init;
+        }
+        frags[i] = frag;
+        if (init) {
+          frag.before(end);
+        }
+      }
+</code></pre><p>第二步：便利旧列表里的每一项，如果 _reused 的标没有被打上，则说明新列表里已经没有它了，就地销毁该 vm。</p>
+<pre><code>for (i = 0, l = oldFrags.length; i &lt; l; i++) {
+    frag = oldFrags[i];
+    if (!frag.reused) {
+//如果没有used说明不存在,就地销毁
+      this.deleteCachedFrag(frag);
+      this.remove(frag, removalIndex++, totalRemoved, inDocument);
+    }
+  }
+</code></pre><p>第三步：整理新的 vm 在视图里的顺序，同时还原之前打上的 _reused 标。就此列表更新完成</p>
+<pre><code>for (i = 0, l = frags.length; i &lt; l; i++) {
+        frag = frags[i];
+        // this is the frag that we should be after
+        targetPrev = frags[i - 1];
+        prevEl = targetPrev ? targetPrev.staggerCb ? targetPrev.staggerAnchor : targetPrev.end || targetPrev.node : start;
+        if (frag.reused &amp;&amp; !frag.staggerCb) {
+          currentPrev = findPrevFrag(frag, start, this.id);
+          if (currentPrev !== targetPrev &amp;&amp; (!currentPrev ||
+          // optimization for moving a single item.
+          // thanks to suggestions by @livoras in #1807
+          findPrevFrag(currentPrev, start, this.id) !== targetPrev)) {
+            this.move(frag, prevEl);
+          }
+        } else {
+          // new instance, or still in stagger.
+          // insert with updated stagger index.
+          this.insert(frag, insertionIndex++, prevEl, inDocument);
+        }
+//还原打上的used
+        frag.reused = frag.fresh = false;
+      }
+</code></pre><p>keep-alive<br>          Vue.js 为其组件设计了一个 [keep-alive] 的特性，如果这个特性存在，那么在组件被重复创建的时候，会通过缓存机制快速创建组件，以提升视图更新的性能。</p>
+<pre><code>          bind: function bind() {
+      if (!this.el.__vue__) {
+        // keep-alive cache
+        this.keepAlive = this.params.keepAlive;
+        if (this.keepAlive) {
+          this.cache = {};
+        }
+.....
+}
+</code></pre><h3 id="数据监听机制"><a href="#数据监听机制" class="headerlink" title="数据监听机制"></a>数据监听机制</h3><h4 id="对象数据监听"><a href="#对象数据监听" class="headerlink" title="对象数据监听"></a>对象数据监听</h4><p>‘Vue’使用’Object.defineProperty’这个’API’为想要监听的属性增加了对应的’getter’和’setter’,每次数据改变的时候在setter中触发函数’dep.notify()’,来达到数据监听的效果</p>
+<pre><code>//对要监听的属性使用Object.defineProperty重写get和set函数,增加setter和getter方法
+  Object.defineProperty(obj, key, {
+        enumerable: true,
+        configurable: true,
+        get: function reactiveGetter() {
+          //增加getter
+          var value = getter ? getter.call(obj) : val;
+          if (Dep.target) {
+          dep.depend();
+          if (childOb) {
+            childOb.dep.depend();
+          }
+          if (isArray(value)) {
+            for (var e, i = 0, l = value.length; i &lt; l; i++) {
+              e = value[i];
+              e &amp;&amp; e.__ob__ &amp;&amp; e.__ob__.dep.depend();
+            }
+          }
+        }
+          return value;
+        },
+        set: function reactiveSetter(newVal) {
+          var value = getter ? getter.call(obj) : val;
+          //在属性set value的时候调用!!!
+          if (newVal === value) {
+            return;
+          }
+          //增加setter
+          if (setter) {
+            setter.call(obj, newVal);
+          } else {
+            val = newVal;
+          }
+          childOb = observe(newVal);
+          //最后调用一个自己的函数
+          dep.notify();
+        }
+      });
+
+      然后dep.notify()都做了什么呢?
+      <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Dep.prototype.notify = function () &#123;</div><div class="line">  // stablize the subscriber list first</div><div class="line">  var subs = toArray(this.subs)</div><div class="line">  for (var i = 0, l = subs.length; i &lt; l; i++) &#123;</div><div class="line">    //对相应的数据进行更新</div><div class="line">    subs[i].update()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      dep在文档里面定义是:
+      <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//A dep is an observable that can have multiple</div><div class="line">//directives subscribing to it.</div><div class="line">export default function Dep () &#123;</div><div class="line">  this.id = uid++</div><div class="line">  this.subs = []</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</code></pre><p>‘dep’是维护数据的一个数组,对应着一个’watcher’对象</p>
+<p>所以整个数据监听的完成是靠set给属性提供一个setter然后当数据更新时,dep会触发watcher对象,返回新值.</p>
+<p>之后会有更详细解释</p>
+<p>数组可能会有点麻烦，Vue.js 采取的是对几乎每一个可能改变数据的方法进行 prototype 更改：</p>
+<pre><code>;[&apos;push&apos;, &apos;pop&apos;, &apos;shift&apos;, &apos;unshift&apos;, &apos;splice&apos;, &apos;sort&apos;, &apos;reverse&apos;].forEach(function (method) {
+    // cache original method
+    var original = arrayProto[method];
+    def(arrayMethods, method, function mutator() {
+      // avoid leaking arguments:
+      // http://jsperf.com/closure-with-arguments
+      var i = arguments.length;
+      var args = new Array(i);
+      while (i--) {
+        args[i] = arguments[i];
+      }
+      var result = original.apply(this, args);
+      var ob = this.__ob__;
+      var inserted;
+      switch (method) {
+        case &apos;push&apos;:
+          inserted = args;
+          break;
+        case &apos;unshift&apos;:
+          inserted = args;
+          break;
+        case &apos;splice&apos;:
+          inserted = args.slice(2);
+          break;
+      }
+      if (inserted) ob.observeArray(inserted);
+      // notify change
+      ob.dep.notify();
+      return result;
+    });
+  });
+</code></pre><p>同时 Vue.js 提供了两个额外的“糖方法” $set 和 $remove 来弥补这方面限制带来的不便。</p>
+<p>但这个策略主要面临两个问题：</p>
+<p>无法监听数据的 length，导致 arr.length 这样的数据改变无法被监听<br>通过角标更改数据，即类似 arr[2] = 1 这样的赋值操作，也无法被监听</p>
+<p>为此 Vue.js 在文档中明确提示不建议直接角标修改数据</p>
+<p>“实例计算属性。getter 和 setter 的 this 自动地绑定到实例。”</p>
+<p>举个栗子:</p>
+<pre><code>var vm = new Vue({
+  data: { a: 1 },
+  computed: {
+    // 仅读取，值只须为函数
+    b: function () {
+      return this.a * 2
+    },
+    // 读取和设置
+    c: {
+      get: function () {
+        return this.a + 1
+      },
+      set: function (v) {
+        this.a = v - 1
+      }
+    }
+  }
+  })
+</code></pre><p>可以看出来computed可以提供自定义一个属性c的getter和setter/b的getter,问题是c和b怎么维护和a的关系</p>
+<p>下面是computed怎么提供属性setter和getter的代码:</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">//初始化computed</div><div class="line">...</div><div class="line">var userDef = computed[key];</div><div class="line">//userDef指的是computed属性,this -&gt; computed</div><div class="line">def.get = makeComputedGetter(userDef, this);</div><div class="line">//或者makeComputedGetter(userDef.get, this)</div><div class="line">...</div><div class="line">function makeComputedGetter(getter, owner) &#123;</div><div class="line">    var watcher = new Watcher(owner, getter, null, &#123;</div><div class="line">      lazy: true</div><div class="line">    &#125;);</div><div class="line">    return function computedGetter() &#123;</div><div class="line">      if (watcher.dirty) &#123;</div><div class="line">        watcher.evaluate();</div><div class="line">      &#125;</div><div class="line">      if (Dep.target) &#123;</div><div class="line">        watcher.depend();</div><div class="line">      &#125;</div><div class="line">      return watcher.value;</div><div class="line">    &#125;;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</code></pre><p>computed在建立的时候绑定一个对应的 watcher 对象，在计算过程中它把属性记录为依赖。之后当依赖的 setter 被调用时，会触发 watcher 重新计算 ，也就会导致它的关联指令更新 DOM。</p>
+<h3 id="视图解析过程"><a href="#视图解析过程" class="headerlink" title="视图解析过程"></a>视图解析过程</h3><h3 id="解析器"><a href="#解析器" class="headerlink" title="解析器"></a>解析器</h3><p>parsers/path.js 主要的职责是可以把一个 JSON 数据里的某一个“路径”下的数据取出来，比如：</p>
+<pre><code>var path = &apos;a.b[1].v&apos;
+var obj = {
+  a: {
+    b: [
+      {v: 1},
+      {v: 2},
+      {v: 3}
+    ]
+  }
+}
+parse(obj, path) // 2
+
+var pathStateMachine = []
+
+pathStateMachine[BEFORE_PATH] = {
+  &apos;ws&apos;: [BEFORE_PATH],
+  &apos;ident&apos;: [IN_IDENT, APPEND],
+  &apos;[&apos;: [IN_SUB_PATH],
+  &apos;eof&apos;: [AFTER_PATH]
+}
+
+pathStateMachine[IN_PATH] = {
+  &apos;ws&apos;: [IN_PATH],
+  &apos;.&apos;: [BEFORE_IDENT],
+  &apos;[&apos;: [IN_SUB_PATH],
+  &apos;eof&apos;: [AFTER_PATH]
+}
+
+pathStateMachine[BEFORE_IDENT] = {
+  &apos;ws&apos;: [BEFORE_IDENT],
+  &apos;ident&apos;: [IN_IDENT, APPEND]
+}
+
+pathStateMachine[IN_IDENT] = {
+  &apos;ident&apos;: [IN_IDENT, APPEND],
+  &apos;0&apos;: [IN_IDENT, APPEND],
+  &apos;number&apos;: [IN_IDENT, APPEND],
+  &apos;ws&apos;: [IN_PATH, PUSH],
+  &apos;.&apos;: [BEFORE_IDENT, PUSH],
+  &apos;[&apos;: [IN_SUB_PATH, PUSH],
+  &apos;eof&apos;: [AFTER_PATH, PUSH]
+}
+
+pathStateMachine[IN_SUB_PATH] = {
+  &quot;&apos;&quot;: [IN_SINGLE_QUOTE, APPEND],
+  &apos;&quot;&apos;: [IN_DOUBLE_QUOTE, APPEND],
+  &apos;[&apos;: [IN_SUB_PATH, INC_SUB_PATH_DEPTH],
+  &apos;]&apos;: [IN_PATH, PUSH_SUB_PATH],
+  &apos;eof&apos;: ERROR,
+  &apos;else&apos;: [IN_SUB_PATH, APPEND]
+}
+
+pathStateMachine[IN_SINGLE_QUOTE] = {
+  &quot;&apos;&quot;: [IN_SUB_PATH, APPEND],
+  &apos;eof&apos;: ERROR,
+  &apos;else&apos;: [IN_SINGLE_QUOTE, APPEND]
+}
+
+pathStateMachine[IN_DOUBLE_QUOTE] = {
+  &apos;&quot;&apos;: [IN_SUB_PATH, APPEND],
+  &apos;eof&apos;: ERROR,
+  &apos;else&apos;: [IN_DOUBLE_QUOTE, APPEND]
+}
+</code></pre><p>状态机可以完成</p>
+<pre><code>1.dom结构中{{data.someObj}}的解析;
+2.对字符型json的取值;
+</code></pre><p>可惜大学里面的编译原理我给忘记了,否则可以给大家解析一下.</p>
+<h4 id="视图解析过程-1"><a href="#视图解析过程-1" class="headerlink" title="视图解析过程"></a>视图解析过程</h4><p>视图的解析过程，Vue.js 的策略是把 element 或 template string 先统一转换成 document fragment，然后再分解和解析其中的子组件和 directives。</p>
+<p>相比React的visual DOM有一定的性能优化空间，毕竟 DOM 操作相比纯 JavaScript 运算还是会慢一些。</p>
+<h3 id="Vue扩展"><a href="#Vue扩展" class="headerlink" title="Vue扩展"></a>Vue扩展</h3><h4 id="Mixin"><a href="#Mixin" class="headerlink" title="Mixin"></a>Mixin</h4><p>Mixin (混入) 是一种可以在多个 Vue 组件之间灵活复用特性的机制。你可以像写一个普通 Vue 组件的选项对象一样编写一个 mixin：</p>
+<pre><code>module.exports = {
+  created: function () {
+    this.hello()
+  },
+  methods: {
+    hello: function () {
+      console.log(&apos;hello from mixin!&apos;)
+    }
+  }
+}
+
+
+
+// test.js
+var myMixin = require(&apos;./mixin&apos;)
+var Component = Vue.extend({
+  mixins: [myMixin]
+})
+var component = new Component() // -&gt; &quot;hello from mixin!&quot;
+</code></pre><h4 id="Vue插件"><a href="#Vue插件" class="headerlink" title="Vue插件"></a>Vue插件</h4><pre><code>Vue插件类型分为以下几种:
+
+1.添加一个或几个全局方法。比如 vue-element
+2.添加一个或几个全局资源：指令、过滤器、动画效果等。比如
+vue-touch
+3.通过绑定到 Vue.prototype 的方式添加一些 Vue 实例方法。这里有个约定，就是 Vue 的实例方法应该带有 $ 前缀，这样就不会和用户的数据和方法产生冲突了。
+</code></pre><h5 id="开发Vue插件"><a href="#开发Vue插件" class="headerlink" title="开发Vue插件"></a>开发Vue插件</h5><pre><code>MyPlugin.install = function (Vue, options) {
+// 1. 添加全局方法或属性
+Vue.myGlobalMethod = ...
+// 2. 添加全局资源
+Vue.directive(&apos;my-directive&apos;, {})
+// 3. 添加实例方法
+Vue.prototype.$myMethod = ...
+}
+</code></pre><h5 id="使用Vue插件"><a href="#使用Vue插件" class="headerlink" title="使用Vue插件"></a>使用Vue插件</h5><pre><code>var vueTouch = require(&apos;vue-touch&apos;)
+// use the plugin globally
+Vue.use(vueTouch)
+你也可以向插件里传递额外的选项：
+
+Vue.use(require(&apos;my-plugin&apos;), {
+/* pass in additional options */
+})
+
+全局方法:
+Vue.fun()
+局部方法:
+vm.$fun()
+</code></pre><h4 id="Vue指令"><a href="#Vue指令" class="headerlink" title="Vue指令"></a>Vue指令</h4><p>Vue.js 允许注册自定义指令，实质上是开放 Vue 一些技巧：怎样将数据的变化映射到 DOM 的行为。你可以使用 Vue.directive(id, definition) 的方法传入指令 id 和定义对象来注册一个全局自定义指令。定义对象需要提供一些钩子函数：<br>bind： 仅调用一次，当指令第一次绑定元素的时候。<br>update： 第一次是紧跟在 bind 之后调用，获得的参数是绑定的初始值；以后每当绑定的值发生变化就会被调用，获得新值与旧值两个参数。<br>unbind：仅调用一次，当指令解绑元素的时候。</p>
+<p>一旦注册好自定义指令，你就可以在 Vue.js 模板中像这样来使用它（需要添加 Vue.js 的指令前缀，默认为 <code>v-</code>）：</p>
+<p><code>&lt;div v-my-directive=&quot;someValue&quot;&gt;&lt;/div&gt;</code></p>
+<p>如果你只需要 <code>update</code> 函数，你可以只传入一个函数，而不用传定义对象：</p>
+<figure class="highlight plain"><figcaption><span>function (value) &#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  // 这个函数会被作为 update() 函数使用</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>所有的钩子函数会被复制到实际的<strong>指令对象</strong>中，而这个指令对象将会是所有钩子函数的 <code>this</code> 上下文环境。指令对象上暴露了一些有用的公开属性：</p>
+<ul>
+<li><strong>el</strong>： 指令绑定的元素</li>
+<li><strong>vm</strong>： 拥有该指令的上下文 ViewModel</li>
+<li><strong>expression</strong>： 指令的表达式，不包括参数和过滤器</li>
+<li><strong>arg</strong>： 指令的参数</li>
+<li><strong>raw</strong>： 未被解析的原始表达式</li>
+<li><strong>name</strong>： 不带前缀的指令名</li>
+</ul>
+<blockquote>
+<p>这些属性是只读的，不要修改它们。你也可以给指令对象附加自定义的属性，但是注意不要覆盖已有的内部属性。</p>
+</blockquote>
+<p>使用指令对象属性的示例：</p>
+<p><code>&lt;div id=&quot;demo&quot; v-demo=&quot;LightSlateGray : msg&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">  bind: function () &#123;</div><div class="line">    this.el.style.color = &apos;#fff&apos;</div><div class="line">    this.el.style.backgroundColor = this.arg</div><div class="line">  &#125;,</div><div class="line">  update: function (value) &#123;</div><div class="line">    this.el.innerHTML =</div><div class="line">      &apos;name - &apos;       + this.name + &apos;&lt;br&gt;&apos; +</div><div class="line">      &apos;raw - &apos;        + this.raw + &apos;&lt;br&gt;&apos; +</div><div class="line">      &apos;expression - &apos; + this.expression + &apos;&lt;br&gt;&apos; +</div><div class="line">      &apos;argument - &apos;   + this.arg + &apos;&lt;br&gt;&apos; +</div><div class="line">      &apos;value - &apos;      + value</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line">var demo = new Vue(&#123;</div><div class="line">  el: &apos;#demo&apos;,</div><div class="line">  data: &#123;</div><div class="line">    msg: &apos;hello!&apos;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong>Result</strong></p>
+<ul>
+<li>name - demo</li>
+<li>raw - LightSlateGray：msg</li>
+<li>expression - msg</li>
+<li>argument - LightSlateGray</li>
+<li>value - hello!</li>
+</ul>
+<h3 id="多重从句"><a href="#多重从句" class="headerlink" title="多重从句"></a>多重从句</h3><p>同一个特性内部，逗号分隔的多个从句将被绑定为多个指令实例。在下面的例子中，指令会被创建和调用两次：</p>
+<p><code>&lt;div v-demo=&quot;color: &#39;white&#39;, text: &#39;hello!&#39;&quot;&gt;&lt;/div&gt;</code></p>
+<p>如果想要用单个指令实例处理多个参数，可以利用字面量对象作为表达式：</p>
+<p><code>&lt;div v-demo=&quot;{color: &#39;white&#39;, text: &#39;hello!&#39;}&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>function (value) &#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  console.log(value) // Object &#123;color: &apos;white&apos;, text: &apos;hello!&apos;&#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="字面指令"><a href="#字面指令" class="headerlink" title="字面指令"></a>字面指令</h2><p>如果在创建自定义指令的时候传入 <code>isLiteral: true</code>，那么特性值就会被看成直接字符串，并被赋值给该指令的 <code>expression</code>。字面指令不会试图建立数据监视。</p>
+<p><strong>Example</strong>：</p>
+<p><code>&lt;div v-literal-dir=&quot;foo&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  isLiteral: true,</div><div class="line">  bind: function () &#123;</div><div class="line">    console.log(this.expression) // &apos;foo&apos;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="动态字面指令"><a href="#动态字面指令" class="headerlink" title="动态字面指令"></a>动态字面指令</h3><p>然而，在字面指令含有 <code>Mustache</code> 标签的情形下，指令的行为如下：</p>
+<ul>
+<li><p>指令实例会有一个属性，<code>this._isDynamicLiteral</code> 被设为 <code>true</code>；</p>
+</li>
+<li><p>如果没有提供 <code>update</code> 函数，<code>Mustache</code> 表达式只会被求值一次，并将该值赋给 <code>this.expression</code> 。不会对表达式进行数据监视。</p>
+</li>
+<li><p>如果提供了 <code>update</code> 函数，指令将会为表达式建立一个数据监视，并且在计算结果变化的时候调用 <code>update</code>。</p>
+</li>
+</ul>
+<h2 id="双向指令"><a href="#双向指令" class="headerlink" title="双向指令"></a>双向指令</h2><p>如果你的指令想向 Vue 实例写回数据，你需要传入 <code>twoWay: true</code> 。该选项允许在指令中使用 <code>this.set(value)</code>。</p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  twoWay: true,</div><div class="line">  bind: function () &#123;</div><div class="line">    this.handler = function () &#123;</div><div class="line">      // 把数据写回 vm</div><div class="line">      // 如果指令这样绑定 v-example=&quot;a.b.c&quot;,</div><div class="line">      // 这里将会给 `vm.a.b.c` 赋值</div><div class="line">      this.set(this.el.value)</div><div class="line">    &#125;.bind(this)</div><div class="line">    this.el.addEventListener(&apos;input&apos;, this.handler)</div><div class="line">  &#125;,</div><div class="line">  unbind: function () &#123;</div><div class="line">    this.el.removeEventListener(&apos;input&apos;, this.handler)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="内联语句"><a href="#内联语句" class="headerlink" title="内联语句"></a>内联语句</h2><p>传入 <code>acceptStatement: true</code> 可以让自定义指令像 <code>v-on</code> 一样接受内联语句：</p>
+<p><code>&lt;div v-my-directive=&quot;a++&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  acceptStatement: true,</div><div class="line">  update: function (fn) &#123;</div><div class="line">    // the passed in value is a function which when called,</div><div class="line">    // will execute the &quot;a++&quot; statement in the owner vm&apos;s</div><div class="line">    // scope.</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>但是请明智地使用此功能，因为通常我们希望避免在模板中产生副作用。</p>
+<h2 id="深度数据观察"><a href="#深度数据观察" class="headerlink" title="深度数据观察"></a>深度数据观察</h2><p>如果你希望在一个对象上使用自定义指令，并且当对象内部嵌套的属性发生变化时也能够触发指令的 <code>update</code> 函数，那么你就要在指令的定义中传入 <code>deep: true</code>。</p>
+<p><code>&lt;div v-my-directive=&quot;obj&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  deep: true,</div><div class="line">  update: function (obj) &#123;</div><div class="line">    // 当 obj 内部嵌套的属性变化时也会调用此函数</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="指令优先级"><a href="#指令优先级" class="headerlink" title="指令优先级"></a>指令优先级</h2><p>你可以选择给指令提供一个优先级数（默认是 0）。同一个元素上优先级越高的指令会比其他的指令处理得早一些。优先级一样的指令会按照其在元素特性列表中出现的顺序依次处理，但是不能保证这个顺序在不同的浏览器中是一致的。</p>
+<p>通常来说作为用户，你并不需要关心内置指令的优先级，如果你感兴趣的话，可以参阅源码。逻辑控制指令 <code>v-repeat</code>， <code>v-if</code> 被视为 “终结性指令”，它们在编译过程中始终拥有最高的优先级。</p>
+<h2 id="元素指令"><a href="#元素指令" class="headerlink" title="元素指令"></a>元素指令</h2><p>有时候，我们可能想要我们的指令可以以自定义元素的形式被使用，而不是作为一个特性。这与 <code>Angular</code> 的 <code>E</code> 类指令的概念非常相似。元素指令可以看做是一个轻量的自定义组件（后面会讲到）。你可以像下面这样注册一个自定义的元素指令：</p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line">  // 和普通指令的 API 一致</div><div class="line">  bind: function () &#123;</div><div class="line">    // 对 this.el 进行操作...</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">### Vue扩展</div><div class="line"></div><div class="line">#### Mixin</div><div class="line"></div><div class="line">Mixin (混入) 是一种可以在多个 Vue 组件之间灵活复用特性的机制。你可以像写一个普通 Vue 组件的选项对象一样编写一个 mixin：</div><div class="line"></div><div class="line">    module.exports = &#123;</div><div class="line">      created: function () &#123;</div><div class="line">        this.hello()</div><div class="line">      &#125;,</div><div class="line">      methods: &#123;</div><div class="line">        hello: function () &#123;</div><div class="line">          console.log(&apos;hello from mixin!&apos;)</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    // test.js</div><div class="line">    var myMixin = require(&apos;./mixin&apos;)</div><div class="line">    var Component = Vue.extend(&#123;</div><div class="line">      mixins: [myMixin]</div><div class="line">    &#125;)</div><div class="line">    var component = new Component() // -&gt; &quot;hello from mixin!&quot;</div><div class="line"></div><div class="line">#### Vue插件</div><div class="line">    Vue插件类型分为以下几种:</div><div class="line"></div><div class="line">    1.添加一个或几个全局方法。比如 vue-element</div><div class="line">    2.添加一个或几个全局资源：指令、过滤器、动画效果等。比如</div><div class="line">    vue-touch</div><div class="line">    3.通过绑定到 Vue.prototype 的方式添加一些 Vue 实例方法。这里有个约定，就是 Vue 的实例方法应该带有 $ 前缀，这样就不会和用户的数据和方法产生冲突了。</div><div class="line"></div><div class="line">##### 开发Vue插件</div><div class="line"></div><div class="line">    MyPlugin.install = function (Vue, options) &#123;</div><div class="line">    // 1. 添加全局方法或属性</div><div class="line">    Vue.myGlobalMethod = ...</div><div class="line">    // 2. 添加全局资源</div><div class="line">    Vue.directive(&apos;my-directive&apos;, &#123;&#125;)</div><div class="line">    // 3. 添加实例方法</div><div class="line">    Vue.prototype.$myMethod = ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">##### 使用Vue插件</div><div class="line"></div><div class="line">    var vueTouch = require(&apos;vue-touch&apos;)</div><div class="line">    // use the plugin globally</div><div class="line">    Vue.use(vueTouch)</div><div class="line">    你也可以向插件里传递额外的选项：</div><div class="line"></div><div class="line">    Vue.use(require(&apos;my-plugin&apos;), &#123;</div><div class="line">    /* pass in additional options */</div><div class="line">    &#125;)</div><div class="line"></div><div class="line">    全局方法:</div><div class="line">    Vue.fun()</div><div class="line">    局部方法:</div><div class="line">    vm.$fun()</div><div class="line"></div><div class="line">#### Vue指令</div><div class="line"></div><div class="line">Vue.js 允许注册自定义指令，实质上是开放 Vue 一些技巧：怎样将数据的变化映射到 DOM 的行为。你可以使用 Vue.directive(id, definition) 的方法传入指令 id 和定义对象来注册一个全局自定义指令。定义对象需要提供一些钩子函数：</div><div class="line">bind： 仅调用一次，当指令第一次绑定元素的时候。</div><div class="line">update： 第一次是紧跟在 bind 之后调用，获得的参数是绑定的初始值；以后每当绑定的值发生变化就会被调用，获得新值与旧值两个参数。</div><div class="line">unbind：仅调用一次，当指令解绑元素的时候。</div><div class="line"></div><div class="line">一旦注册好自定义指令，你就可以在 Vue.js 模板中像这样来使用它（需要添加 Vue.js 的指令前缀，默认为 `v-`）：</div><div class="line"></div><div class="line">`&lt;div v-my-directive=&quot;someValue&quot;&gt;&lt;/div&gt;`</div><div class="line"></div><div class="line">如果你只需要 `update` 函数，你可以只传入一个函数，而不用传定义对象：</div><div class="line"></div><div class="line">```Vue.directive(&apos;my-directive&apos;, function (value) &#123;</div><div class="line">  // 这个函数会被作为 update() 函数使用</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>所有的钩子函数会被复制到实际的<strong>指令对象</strong>中，而这个指令对象将会是所有钩子函数的 <code>this</code> 上下文环境。指令对象上暴露了一些有用的公开属性：</p>
+<ul>
+<li><strong>el</strong>： 指令绑定的元素</li>
+<li><strong>vm</strong>： 拥有该指令的上下文 ViewModel</li>
+<li><strong>expression</strong>： 指令的表达式，不包括参数和过滤器</li>
+<li><strong>arg</strong>： 指令的参数</li>
+<li><strong>raw</strong>： 未被解析的原始表达式</li>
+<li><strong>name</strong>： 不带前缀的指令名</li>
+</ul>
+<blockquote>
+<p>这些属性是只读的，不要修改它们。你也可以给指令对象附加自定义的属性，但是注意不要覆盖已有的内部属性。</p>
+</blockquote>
+<p>使用指令对象属性的示例：</p>
+<p><code>&lt;div id=&quot;demo&quot; v-demo=&quot;LightSlateGray : msg&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">  bind: function () &#123;</div><div class="line">    this.el.style.color = &apos;#fff&apos;</div><div class="line">    this.el.style.backgroundColor = this.arg</div><div class="line">  &#125;,</div><div class="line">  update: function (value) &#123;</div><div class="line">    this.el.innerHTML =</div><div class="line">      &apos;name - &apos;       + this.name + &apos;&lt;br&gt;&apos; +</div><div class="line">      &apos;raw - &apos;        + this.raw + &apos;&lt;br&gt;&apos; +</div><div class="line">      &apos;expression - &apos; + this.expression + &apos;&lt;br&gt;&apos; +</div><div class="line">      &apos;argument - &apos;   + this.arg + &apos;&lt;br&gt;&apos; +</div><div class="line">      &apos;value - &apos;      + value</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line">var demo = new Vue(&#123;</div><div class="line">  el: &apos;#demo&apos;,</div><div class="line">  data: &#123;</div><div class="line">    msg: &apos;hello!&apos;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><strong>Result</strong></p>
+<ul>
+<li>name - demo</li>
+<li>raw - LightSlateGray：msg</li>
+<li>expression - msg</li>
+<li>argument - LightSlateGray</li>
+<li>value - hello!</li>
+</ul>
+<h3 id="多重从句-1"><a href="#多重从句-1" class="headerlink" title="多重从句"></a>多重从句</h3><p>同一个特性内部，逗号分隔的多个从句将被绑定为多个指令实例。在下面的例子中，指令会被创建和调用两次：</p>
+<p><code>&lt;div v-demo=&quot;color: &#39;white&#39;, text: &#39;hello!&#39;&quot;&gt;&lt;/div&gt;</code></p>
+<p>如果想要用单个指令实例处理多个参数，可以利用字面量对象作为表达式：</p>
+<p><code>&lt;div v-demo=&quot;{color: &#39;white&#39;, text: &#39;hello!&#39;}&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>function (value) &#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  console.log(value) // Object &#123;color: &apos;white&apos;, text: &apos;hello!&apos;&#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="字面指令-1"><a href="#字面指令-1" class="headerlink" title="字面指令"></a>字面指令</h2><p>如果在创建自定义指令的时候传入 <code>isLiteral: true</code>，那么特性值就会被看成直接字符串，并被赋值给该指令的 <code>expression</code>。字面指令不会试图建立数据监视。</p>
+<p><strong>Example</strong>：</p>
+<p><code>&lt;div v-literal-dir=&quot;foo&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  isLiteral: true,</div><div class="line">  bind: function () &#123;</div><div class="line">    console.log(this.expression) // &apos;foo&apos;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="动态字面指令-1"><a href="#动态字面指令-1" class="headerlink" title="动态字面指令"></a>动态字面指令</h3><p>然而，在字面指令含有 <code>Mustache</code> 标签的情形下，指令的行为如下：</p>
+<ul>
+<li><p>指令实例会有一个属性，<code>this._isDynamicLiteral</code> 被设为 <code>true</code>；</p>
+</li>
+<li><p>如果没有提供 <code>update</code> 函数，<code>Mustache</code> 表达式只会被求值一次，并将该值赋给 <code>this.expression</code> 。不会对表达式进行数据监视。</p>
+</li>
+<li><p>如果提供了 <code>update</code> 函数，指令将会为表达式建立一个数据监视，并且在计算结果变化的时候调用 <code>update</code>。</p>
+</li>
+</ul>
+<h2 id="双向指令-1"><a href="#双向指令-1" class="headerlink" title="双向指令"></a>双向指令</h2><p>如果你的指令想向 Vue 实例写回数据，你需要传入 <code>twoWay: true</code> 。该选项允许在指令中使用 <code>this.set(value)</code>。</p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">  twoWay: true,</div><div class="line">  bind: function () &#123;</div><div class="line">    this.handler = function () &#123;</div><div class="line">      // 把数据写回 vm</div><div class="line">      // 如果指令这样绑定 v-example=&quot;a.b.c&quot;,</div><div class="line">      // 这里将会给 `vm.a.b.c` 赋值</div><div class="line">      this.set(this.el.value)</div><div class="line">    &#125;.bind(this)</div><div class="line">    this.el.addEventListener(&apos;input&apos;, this.handler)</div><div class="line">  &#125;,</div><div class="line">  unbind: function () &#123;</div><div class="line">    this.el.removeEventListener(&apos;input&apos;, this.handler)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="内联语句-1"><a href="#内联语句-1" class="headerlink" title="内联语句"></a>内联语句</h2><p>传入 <code>acceptStatement: true</code> 可以让自定义指令像 <code>v-on</code> 一样接受内联语句：</p>
+<p><code>&lt;div v-my-directive=&quot;a++&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  acceptStatement: true,</div><div class="line">  update: function (fn) &#123;</div><div class="line">    // the passed in value is a function which when called,</div><div class="line">    // will execute the &quot;a++&quot; statement in the owner vm&apos;s</div><div class="line">    // scope.</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>但是请明智地使用此功能，因为通常我们希望避免在模板中产生副作用。</p>
+<h2 id="深度数据观察-1"><a href="#深度数据观察-1" class="headerlink" title="深度数据观察"></a>深度数据观察</h2><p>如果你希望在一个对象上使用自定义指令，并且当对象内部嵌套的属性发生变化时也能够触发指令的 <code>update</code> 函数，那么你就要在指令的定义中传入 <code>deep: true</code>。</p>
+<p><code>&lt;div v-my-directive=&quot;obj&quot;&gt;&lt;/div&gt;</code></p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  deep: true,</div><div class="line">  update: function (obj) &#123;</div><div class="line">    // 当 obj 内部嵌套的属性变化时也会调用此函数</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="指令优先级-1"><a href="#指令优先级-1" class="headerlink" title="指令优先级"></a>指令优先级</h2><p>你可以选择给指令提供一个优先级数（默认是 0）。同一个元素上优先级越高的指令会比其他的指令处理得早一些。优先级一样的指令会按照其在元素特性列表中出现的顺序依次处理，但是不能保证这个顺序在不同的浏览器中是一致的。</p>
+<p>通常来说作为用户，你并不需要关心内置指令的优先级，如果你感兴趣的话，可以参阅源码。逻辑控制指令 <code>v-repeat</code>， <code>v-if</code> 被视为 “终结性指令”，它们在编译过程中始终拥有最高的优先级。</p>
+<h2 id="元素指令-1"><a href="#元素指令-1" class="headerlink" title="元素指令"></a>元素指令</h2><p>有时候，我们可能想要我们的指令可以以自定义元素的形式被使用，而不是作为一个特性。这与 <code>Angular</code> 的 <code>E</code> 类指令的概念非常相似。元素指令可以看做是一个轻量的自定义组件（后面会讲到）。你可以像下面这样注册一个自定义的元素指令：</p>
+<figure class="highlight plain"><figcaption><span>&#123;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div></pre></td><td class="code"><pre><div class="line">  // 和普通指令的 API 一致</div><div class="line">  bind: function () &#123;</div><div class="line">    // 对 this.el 进行操作...</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">### vuejs vs angularjs</div><div class="line">    Angular Modules</div><div class="line">    angular.module(&apos;myModule&apos;, [...]);</div><div class="line">    Components</div><div class="line">    Vue.extend(&#123;</div><div class="line">      data: function()&#123; return &#123;...&#125; &#125;,</div><div class="line">      created: function() &#123;...&#125;,</div><div class="line">      ready: function() &#123;...&#125;,</div><div class="line">      components: &#123;...&#125;,</div><div class="line">      methods: &#123;...&#125;,</div><div class="line"></div><div class="line">总体来说</div><div class="line">对于Angular来说module就是一个容器,而对Vue来说一个component里面会有逻辑代码</div><div class="line">在Vue里面会放进许多代码细节,并且有固定的属性</div><div class="line"></div><div class="line">    Directives</div><div class="line">    Angular</div><div class="line">    myModule.directive(&apos;directiveName&apos;, function (injectables) &#123;</div><div class="line">      return &#123;</div><div class="line">        restrict: &apos;A&apos;,</div><div class="line">        template: &apos;&lt;div&gt;&lt;/div&gt;&apos;,</div><div class="line">        controller: function() &#123; ... &#125;,</div><div class="line">        compile: function() &#123;...&#125;,</div><div class="line">        link: function() &#123; ... &#125;</div><div class="line">        //(other props excluded)</div><div class="line">      &#125;;</div><div class="line">    &#125;);</div><div class="line">    Vue</div><div class="line">    Vue.directive(&apos;my-directive&apos;, &#123;</div><div class="line">      bind: function () &#123;...&#125;,</div><div class="line">      update: function (newValue, oldValue) &#123;...&#125;,</div><div class="line">      unbind: function () &#123;...&#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">Vue的指令比Angular的简单,而Angular的指令类似Vue的component</div><div class="line"></div><div class="line">    Filters</div><div class="line">    Angular</div><div class="line">    myModule.angular.module(‘filterName&apos;, [])</div><div class="line">    .filter(&apos;reverse&apos;, function() &#123;</div><div class="line">    return function(input) &#123;...&#125;;</div><div class="line">    &#125;);</div><div class="line">    Vue</div><div class="line">    Vue.filter(&apos;reverse&apos;, function (value) &#123;</div><div class="line">    return function(value)&#123;...&#125;;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line"></div><div class="line">filters都是类似的,但是Vue提供了read/wirte功能</div><div class="line"></div><div class="line">    Templating</div><div class="line">    Interpolation</div><div class="line">    &#123;&#123;myVariable&#125;&#125;</div><div class="line">    Interpolation</div><div class="line">    &#123;&#123;myVariable&#125;&#125;</div><div class="line"></div><div class="line"></div><div class="line">当输出是一个对象的时候</div><div class="line">Vue:[Object]</div><div class="line">Angular :&#123;[attr:value]&#125;</div><div class="line">Vue可以使用filters得到正常输出 &#123;&#123;someObject|json&#125;&#125;</div><div class="line"></div><div class="line">    Model binding</div><div class="line">    Angular</div><div class="line">    &lt;input type=&quot;text&quot; ng-model=&quot;myVar&quot;&gt;</div><div class="line">    &lt;p ng-bind=&quot;myVar&quot;&gt;&lt;/p&gt;</div><div class="line">    Vue</div><div class="line">    &lt;input type=&quot;text&quot; v-model=&quot;myVar&quot;&gt;</div><div class="line">    &lt;p v-model=&quot;myVar&quot;&gt;&lt;/p&gt;</div><div class="line"></div><div class="line">    Loops</div><div class="line">    Angular</div><div class="line">    &lt;li ng-repeat=&quot;item in items&quot; class=&quot;item-&#123;&#123;$index&#125;&#125;&quot;&gt;</div><div class="line">      &#123;&#123;item.myProperty&#125;&#125;</div><div class="line">    &lt;/li&gt;</div><div class="line">    Vue</div><div class="line">    &lt;li v-for=&quot;items&quot; class=&quot;item-&#123;&#123;$index&#125;&#125;&quot;&gt;</div><div class="line">      &#123;&#123;myProperty&#125;&#125;</div><div class="line">    &lt;/li&gt;</div><div class="line"></div><div class="line">    Conditionals</div><div class="line">    Angular</div><div class="line">    &lt;div ng-if=&quot;myVar&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;div ng-show=&quot;myVar&quot;&gt;&lt;/div&gt;</div><div class="line">    Vue</div><div class="line">    &lt;div v-if=&quot;myVar&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;div v-show=&quot;myVar&quot;&gt;&lt;/div&gt;</div><div class="line"></div><div class="line">    Conditional classes</div><div class="line">    Angular</div><div class="line">    &lt;div ng-class=&quot;&#123;‘active’: myVar&#125;&quot;&gt;&lt;/div&gt;</div><div class="line">    Vue</div><div class="line">    &lt;div v-class=&quot;active: myVar&quot;&gt;&lt;/div&gt;</div><div class="line"></div><div class="line">Vue也可以这样写v-repeat=&apos;item: items&apos;</div><div class="line"></div><div class="line">    Event binding</div><div class="line">    Angular</div><div class="line">    &lt;div ng-click=&quot;myMethod($event)&quot;&gt;&lt;/div&gt;</div><div class="line">    Vue</div><div class="line">    &lt;div v-on=&quot;click: myMethod($event)&quot;&gt;&lt;/div&gt;</div><div class="line"></div><div class="line">通用v-on指令使事件更加一致</div><div class="line"></div><div class="line">#### 脏值检查</div><div class="line">一个电话列表应用的例子，在其中我们会将一个phones数组中的值（在JavaScript中定义）绑定到一个列表项目中以便于我们的数据和UI保持同步：</div><div class="line"></div><div class="line">    &lt;code&gt;&lt;html ng-app&gt;</div><div class="line">      &lt;head&gt;</div><div class="line">    ...</div><div class="line">    &lt;script src=&quot;angular.js&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;controller.js&quot;&gt;&lt;/script&gt;</div><div class="line">      &lt;/head&gt;</div><div class="line">      &lt;body ng-controller=&quot;PhoneListCtrl&quot;&gt;</div><div class="line">    &lt;ul&gt;</div><div class="line">      &lt;li ng-repeat=&quot;phone in phones&quot;&gt;</div><div class="line">    &#123;&#123;phone.name&#125;&#125;</div><div class="line">    &lt;p&gt;&#123;&#123;phone.snippet&#125;&#125;&lt;/p&gt;</div><div class="line">      &lt;/li&gt;</div><div class="line">    &lt;/ul&gt;</div><div class="line">      &lt;/body&gt;</div><div class="line">    &lt;/html&gt;</div><div class="line">    &lt;/code&gt;</div><div class="line"></div><div class="line">    &lt;code&gt;var phonecatApp = angular.module(&apos;phonecatApp&apos;, []);</div><div class="line"></div><div class="line">    phonecatApp.controller(&apos;PhoneListCtrl&apos;, function($scope) &#123;</div><div class="line">      $scope.phones = [</div><div class="line">    &#123;&apos;name&apos;: &apos;Nexus S&apos;,</div><div class="line">     &apos;snippet&apos;: &apos;Fast just got faster with Nexus S.&apos;&#125;,</div><div class="line">    &#123;&apos;name&apos;: &apos;Motorola XOOM with Wi-Fi&apos;,</div><div class="line">     &apos;snippet&apos;: &apos;The Next, Next Generation tablet.&apos;&#125;,</div><div class="line">    &#123;&apos;name&apos;: &apos;MOTOROLA XOOM&apos;,</div><div class="line">     &apos;snippet&apos;: &apos;The Next, Next Generation tablet.&apos;&#125;</div><div class="line">      ];</div><div class="line">    &#125;);  </div><div class="line">    &lt;/code&gt;</div><div class="line"></div><div class="line">任何时候只要是底层的model数据发生了变化，我们在DOM中的列表也会跟着更新。</div><div class="line"></div><div class="line">脏值检查的基本原理就是只要任何时候数据发生了变化，这个库都会通过一个digest或者change cycle去检查变化是否发生了。在Angular中，一个digest循环意味着所有所有被监视的表达式都会被循环一遍以便查看其中是否有变化发生。它智斗一个模型之前的值因此当变化发生时，一个change事件将会被触发。对于开发者来说，这带来的一大好处就是你可以使用原生的JavaScript对象数据，它易于使用及整合。下面的图片展示的是一个非常糟糕的算法，它的开销非常大。</div><div class="line"></div><div class="line">这个操作的开销和被监视的对象的数量是成正比的。我可能需要做很多的脏治检查。同时当数据发生改变时,我也需要一种方式去触发脏值检查.</div><div class="line"></div><div class="line">相比Angular的脏值检查,Vue的setter/getter方案使数据和DOM更新的时间复杂度降低,数据的更新只发生在数据发生改变时,数据更新的时间复杂度只和数据的观察者有关,&quot;它们拥有一些存取器去获取数据并且能够在你设置或者获取对象时捕获到这些行为并在内部进行广播&quot;.</div><div class="line"></div><div class="line">#### vue的约束的模型系统</div><div class="line"></div><div class="line">而且相比Object.observer()[在es7标准中],Vue的存取方式可以做到比较好的兼容性.</div><div class="line"></div><div class="line">### Vue实现简单的watcher</div><div class="line"></div><div class="line">    1.实现observer</div><div class="line">    2.Vue消息-订阅器</div><div class="line">    3.Watcher的实现</div><div class="line">    4.实现一个Vue</div><div class="line"></div><div class="line">实现一个 $wacth</div></pre></td></tr></table></figure>
+<pre><code>const v = new Vue({
+  data:{
+    a:1,
+    b:2
+  }
+})
+v.$watch(&quot;a&quot;,()=&gt;console.log(&quot;哈哈，$watch成功&quot;))
+setTimeout(()=&gt;{
+  v.a = 5
+},2000) //打印 哈哈，$watch成功
+```
+</code></pre><p>为了帮助大家理清思路。。我们就做最简单的实现。。只考虑对象不考虑数组</p>
+<h5 id="实现obserer"><a href="#实现obserer" class="headerlink" title="实现obserer"></a>实现obserer</h5><p>将要observe的对象， 通过递归，将它所有的属性，包括子属性的属性，都给加上set和get， 这样的话，给这个对象的某个属性赋值，就会触发set。就给每个属性（包括子属性）都加上get/set， 这样的话，这个对象的，有任何赋值，就会触发set方法。</p>
+<pre><code>export default class  Observer{
+  constructor(value) {
+    this.value = value
+    this.walk(value)
+  }
+  //递归。。让每个字属性可以observe
+  walk(value){
+    Object.keys(value).forEach(key=&gt;this.convert(key,value[key]))
+  }
+  convert(key, val){
+    defineReactive(this.value, key, val)
+  }
+}
+
+
+export function defineReactive (obj, key, val) {
+  var childOb = observe(val)
+  Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: true,
+    get: ()=&gt;val,
+    set:newVal=&gt; {      
+     childOb = observe(newVal)//如果新赋值的值是个复杂类型。再递归它，加上set/get。。
+     }
+  })
+}
+
+
+export function observe (value, vm) {
+  if (!value || typeof value !== &apos;object&apos;) {
+    return
+  }
+  return new Observer(value)
+}
+</code></pre><h5 id="消息－订阅器"><a href="#消息－订阅器" class="headerlink" title="消息－订阅器"></a>消息－订阅器</h5><p>维护一个数组，，这个数组，就放订阅着，一旦触发notify， 订阅者就调用自己的update方法</p>
+<pre><code>export default class Dep {
+  constructor() {
+    this.subs = []
+  }
+  addSub(sub){
+    this.subs.push(sub)
+  }
+  notify(){
+    this.subs.forEach(sub=&gt;sub.update())
+  }
+}
+</code></pre><p>每次set函数，调用的时候，我们是不是应该，触发notify，对吧。所以 我们把代码补充完整</p>
+<pre><code>export function defineReactive (obj, key, val) {
+      var dep = new Dep()
+      var childOb = observe(val)
+      Object.defineProperty(obj, key, {
+        enumerable: true,
+        configurable: true,
+        get: ()=&gt;val,
+        set:newVal=&gt; {
+          var value =  val
+          if (newVal === value) {
+            return
+          }
+          val = newVal
+          childOb = observe(newVal)
+          dep.notify()
+        }
+      })
+    }
+</code></pre><h5 id="实现一个Watcher"><a href="#实现一个Watcher" class="headerlink" title="实现一个Watcher"></a>实现一个Watcher</h5><pre><code>v.$watch(&quot;a&quot;,()=&gt;console.log(&quot;哈哈，$watch成功&quot;))
+</code></pre><p>我们想象这个Watcher，应该用什么东西。update方法，嗯这个毋庸置疑， 还有呢，<br>对表达式（就是那个“a”） 和 回调函数，这是最基本的，所以我们简单写写</p>
+<pre><code>export default class Watcher {
+  constructor(vm, expOrFn, cb) {
+    this.cb = cb
+    this.vm = vm
+    //此处简化.要区分fuction还是expression,只考虑最简单的expression
+    this.expOrFn = expOrFn
+    this.value = this.get()
+  }
+  update(){
+    this.run()
+  }
+  run(){
+    const  value = this.get()
+    if(value !==this.value){
+      this.value = value
+      this.cb.call(this.vm)
+    }
+  }
+  get(){
+    //此处简化。。要区分fuction还是expression
+    const value = this.vm._data[this.expOrFn]
+    return value
+  }
+}
+</code></pre><p>怎样将通过addSub(),将Watcher加进去呢。 我们发现var dep = new Dep() 处于闭包当中， 我们又发现Watcher的构造函数里会调用this.get 所以，我们可以在上面动动手脚， 修改一下Object.defineProperty的get要调用的函数， 判断是不是Watcher的构造函数调用，如果是，说明他就是这个属性的订阅者 果断将他addSub()中去，那问题来了， 我怎样判断他是Watcher的this.get调用的，而不是我们普通调用的呢</p>
+<pre><code>export default class Watcher {
+  ....省略未改动代码....
+  get(){
+    Dep.target = this
+    //此处简化。。要区分fuction还是expression
+    const value = this.vm._data[this.expOrFn]
+    Dep.target = null
+    return value
+  }
+}
+</code></pre><p>这样的话，我们只需要在Object.defineProperty的get要调用的函数里， 判断有没有值，就知道到底是Watcher 在get，还是我们自己在查看赋值，如果 是Watcher的话就addSub(),代码补充一下</p>
+<pre><code>export function defineReactive (obj, key, val) {
+var dep = new Dep()
+var childOb = observe(val)
+
+Object.defineProperty(obj, key, {
+enumerable: true,
+configurable: true,
+get: ()=&gt;{
+  // 说明这是watch 引起的
+  if(Dep.target){
+    dep.addSub(Dep.target)
+  }
+  return val
+},
+set:newVal=&gt; {
+  var value =  val
+  if (newVal === value) {
+    return
+  }
+  val = newVal
+  childOb = observe(newVal)
+  dep.notify()
+}
+})
+}
+</code></pre><p>最后不要忘记，在Dep.js中加上这么一句</p>
+<pre><code>Dep.target = null
+</code></pre><h5 id="实现一个Vue"><a href="#实现一个Vue" class="headerlink" title="实现一个Vue"></a>实现一个Vue</h5><p>我们要把以上代码配合Vue的$watch方法来用， 要watch Vue实例的属性:</p>
+<pre><code>import Watcher from &apos;../watcher&apos;
+import {observe} from &quot;../observer&quot;
+
+export default class Vue {
+  constructor (options={}) {
+    //这里简化了。。其实要merge
+    this.$options=options
+    //这里简化了。。其实要区分的
+    let data = this._data=this.$options.data
+    Object.keys(data).forEach(key=&gt;this._proxy(key))
+    observe(data,this)
+  }
+
+
+  $watch(expOrFn, cb, options){
+    new Watcher(this, expOrFn, cb)
+  }
+
+  _proxy(key) {
+    var self = this
+    Object.defineProperty(self, key, {
+      configurable: true,
+      enumerable: true,
+      get: function proxyGetter () {
+        return self._data[key]
+      },
+      set: function proxySetter (val) {
+        self._data[key] = val
+      }
+    })
+  }
+}
+</code></pre><p>两件事，observe自己的data，代理自己的data， 使访问自己的属性，就是访问子data的属性。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/2017/08/03/异步编程解决方案-generator/" itemprop="url">
+                  异步编程解决方案 - generator
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:32:43+08:00" content="2017-08-03">
+              2017-08-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="异步编程难点"><a href="#异步编程难点" class="headerlink" title="异步编程难点"></a>异步编程难点</h2><h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p>在处理异常时经常用try/catch/final语句块进行异常捕获，但是这种异常捕获对异步编程并不是用</p>
+<pre><code>function async(callback) {
+    process.nextTick(callback);
+}
+
+try {
+    async(function () {
+        console.log(a);
+    });
+} catch (err) {
+    // TODO
+}
+</code></pre><p>异步代码分为两个过程，提交请求和处理结果，其中代码在异步处理完成之前返回，而异常不一定在这个过程中发生，所以try、catch不会有任何作用，调用async时，callback被暂时挂起，等到代码执行完毕才会执行，try只能捕获当前事件循环的异常，对下一次的事件循环无法处理（nodejs异步时间做了约定，异常一定被当成第一个参数传回，在调用callback时先判断是否有异常发生）</p>
+<pre><code>function async(callback) {
+    process.nextTick(function () {
+        if (err) {
+            return callback(err);
+        }
+        callback(null);
+
+    });
+}
+
+try {
+    async(function (err) {
+        if (!err) {
+            console.log(a);
+        }
+    });
+} catch (err) {
+    // TODO
+}
+</code></pre><h4 id="函数嵌套过深"><a href="#函数嵌套过深" class="headerlink" title="函数嵌套过深"></a>函数嵌套过深</h4><p>对于Node和agax调用而言，有时会存在多个异步调用嵌套的场景，比如一个文件目录的遍历操作：</p>
+<pre><code>fs.readdir(path.join(__dirname, &apos;..&apos;), function (err, file) {
+    files.forEach(function (filename, index) {
+        fs.readFile(filename, &apos;utf8), function (err, file) {
+            // TODO
+        }
+    });
+});
+</code></pre><p>或者一个网页渲染操作：</p>
+<pre><code>$(selector).click(function (e) {
+    $ajax({
+        data: &apos;&apos;,
+        success: function (data) {
+            template.init(data, function (tpl) {
+                // TODO
+            });
+        }
+    });
+});
+</code></pre><p>上面的代码逻辑上是没有问题的，但是并没有利用好异步I/O带来的优势，这是异步编程的典型问题。</p>
+<h4 id="多线程编程"><a href="#多线程编程" class="headerlink" title="多线程编程"></a>多线程编程</h4><p>如果是多核CPU，单个Node进程实际没有充分利用多核CPU，浏览器提出了Web workers，通过将javascrit执行与UI渲染分离，可以良好的利用多核CPU。因为前端浏览器对标准的滞后，Web workers并没有广泛应用起来。</p>
+<h4 id="异步转同步"><a href="#异步转同步" class="headerlink" title="异步转同步"></a>异步转同步</h4><p>习惯同步编程的同学，并不能从容面对异步编程带来的副产品，比如嵌套回调、业务分散。Node 提供了绝大部分异步 API 却很少有同步 API，往往出现同步需求会无所适从，虽然 Node 试图异步转同步但是并没有原生的支持，需要借助库或者编译实现，对于异步编程通过良好的流程控制，还是可以降落几梳理成顺序的形式。</p>
+<h3 id="异步编程解决方案"><a href="#异步编程解决方案" class="headerlink" title="异步编程解决方案"></a>异步编程解决方案</h3><h4 id="事件发布-订阅模式"><a href="#事件发布-订阅模式" class="headerlink" title="事件发布/订阅模式"></a>事件发布/订阅模式</h4><pre><code>// 订阅 
+emiiiter.on(&apos;event&apos;， function(message) {
+    console.log(message);
+})
+// 发布
+emitter.emit(&apos;event&apos;, &apos;i am a message&apos;);
+</code></pre><p>事件监听是一种高阶函数的应用，通过事件可以把内部数据传递给外部的调用者，编程者可以不用关心组件内部如何执行，只需关注在需要的事件点上即可。注意： </p>
+<ul>
+<li>如果事件的监听器过多可能出现过度占用cup的结果。</li>
+<li>如果运行期间触发了error事件，解释器会检查是否对error监听了事件，如果有就交给监听器处理，如果没有则将错误抛出。所以应该对error事件做监听。</li>
+</ul>
+<p>利用事件可以解决雪崩问题：当大量的访问同时发生时，服务器无法对所有的访问做处理，可以在第一个回调添加状态锁控制服务器的访问数量，同时使用事件（once）把所有请求压入队列中。</p>
+<h4 id="promise-deferred模式"><a href="#promise-deferred模式" class="headerlink" title="promise/deferred模式"></a>promise/deferred模式</h4><p>promise/A 规定了三种状态，未完成态、完成态和失败态，未完成态向其他两种状态转化，不能逆转；</p>
+<p>pedding  -&gt; resolved<br>         -&gt; rejected</p>
+<pre><code>function call(state, fn, err, arg) {
+    if  (state === &apos;pendding&apos;) {
+        fn(arg);
+    } else {
+        fn(err);
+    }
+
+}
+new Promise = function (fn) {
+    this.state = &apos;pendding&apos;;
+    this.fn = function() {};
+    return fn(this.resolve, this.reject);
+}
+Promise.prototype.then = function (fn) {
+    this.fn = fn;
+    return this;
+}
+Promise.prototype.resolve = function (arg) {
+    this.state = &apos;resolved&apos;;
+    call(this.state, this.fn, null, arg);
+    return this;
+}
+Promise.prototype.reject = function () {
+    this.state = &apos;rejected&apos;;
+    var err = &quot;err opened&quot;;
+    call(this.state, this.fn, err);
+    return this;
+}
+new Promise(function (resolve, reject) {
+    setTimeout(function () {
+        var value = &apos;abc&apos;;
+        resolve(value);
+    }, 100);
+}).then(function (result) {
+    console.log(result);
+});
+</code></pre><h4 id="流程控制库"><a href="#流程控制库" class="headerlink" title="流程控制库"></a>流程控制库</h4><h5 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h5><p>使用connect存储中间件手动调用执行的方式，例如next，通常叫做尾触发，尾触发在jquery中非常常见，比如</p>
+<pre><code>$get(&apos;/get&apos;).success().error();
+</code></pre><p>这种方式首先注册中间件，每个中间件包括传递请求对象，响应对象和尾触发函数，通过队列行程一个处理流，最简单的中间例如：</p>
+<pre><code>function (req, res, err) {
+    // 中间件
+}
+</code></pre><p>connect核心代码：</p>
+<pre><code>function creatServer() {
+    function app(req, res) {
+        app.handle(req,res);
+    }
+    app.stack = [];
+    for (var i = 0; i &lt; arguments.length; ++i) {
+        app.use(arguments[i]);
+    }
+    return app;
+}
+</code></pre><p>app.use: </p>
+<pre><code>app.use = function(router, fn) {
+    this.stack.push(fn);
+    return this;
+}
+</code></pre><p>next:</p>
+<pre><code>function handle = function() {
+    // ...
+    next();
+}
+function next() {
+    // ... next callback ...
+    layer = this.stack[index++];
+    layer.handle(req, res, next);
+}
+</code></pre><h5 id="async"><a href="#async" class="headerlink" title="async"></a>async</h5><p>异步的串行执行</p>
+<pre><code>async.series([function (callback) {
+    callback();
+},function (callback) {
+    callback();
+}], function (err, result) {})
+</code></pre><p>等价于：</p>
+<pre><code>function (callback) {
+    function (callback) {
+        callback();
+    }
+    callback();
+}
+</code></pre><p>异步的并行执行：</p>
+<pre><code>async.parallel([function (callback) {
+    callback();
+}, function (callback) {
+    callback();
+}], function (err, results) {
+
+});
+</code></pre><p>等价于：</p>
+<pre><code>var counter = 2;
+var results = [];
+var done = function (index, value) {
+    results[index] = value;
+    if (!--conuter) {
+        callback(null, results);
+    }
+}
+
+function (callback) {
+    // var value = ...
+    callback();
+    done(0, value);
+}
+function (callback) {
+    // var value = ...
+    callback();
+    done(1, value);
+}
+</code></pre><p>依赖处理</p>
+<pre><code>当前一个异步的结果是后一个异步的输入时，async使用waterfall方式处理
+
+async.waterfall([function (callback) {
+    callback();
+}, function (arg1, callback) {
+    callback();
+}, function (arg2, callback) {
+    callback();
+}], function (err, results) {
+
+});
+</code></pre><p>当存在很多依赖关系，有同步有异步时，async使用auto()实现复杂的处理</p>
+<pre><code>async.waterfall({
+    fun1:function (callback) {
+        callback();
+    },
+    fun2: [&apos;fun1&apos;, function (arg1, callback) {
+        callback();
+    }, function (arg2, callback) {
+        callback();
+    }]}, function (err, results) {
+
+    });
+</code></pre><h5 id="step"><a href="#step" class="headerlink" title="step"></a>step</h5><p>step接受任意数量的任务，所有任务会串行执行：</p>
+<pre><code>step(task1, task2, task3);
+</code></pre><p>step使用next把上一步的结果传递给下一步作为参数<br>在执行多个异步任务时，调用代码如下：</p>
+<pre><code>step(function () {
+    fn1(this.parallel());
+    fn2(this.parallel());
+}, function (err, result1, result2) {
+
+});
+</code></pre><h5 id="wind"><a href="#wind" class="headerlink" title="wind"></a>wind</h5><p>wind旨在控制异步流程的逻辑控制，其作用类似generator：</p>
+<pre><code>eval(Wind.compile(&apos;async&apos;, funtion () {
+    $await(Wind.Async.sleep(20)); //延迟20ms
+    console.log(&apos;hello world&apos;);
+}));
+</code></pre><h3 id="generator"><a href="#generator" class="headerlink" title="generator"></a>generator</h3><h4 id="generaor函数"><a href="#generaor函数" class="headerlink" title="generaor函数"></a>generaor函数</h4><pre><code>function * maker(){
+    var index = 0;
+    while (index &lt; 10) {
+        yield index++;
+    }
+}
+
+var g = maker();
+// 输出结果
+console.log(g.next().value); // 0
+console.log(g.next().value); // 1
+console.log(g.next().value); // 2
+</code></pre><h4 id="yeild关键字"><a href="#yeild关键字" class="headerlink" title="yeild关键字"></a>yeild关键字</h4><p>yield 关键字用来暂停和恢复一个生成器函数</p>
+<pre><code>[rv] = yield [expression];
+
+yield [[expression]];
+</code></pre><p>rv 返回传递给生成器的 next() 方法的可选值，以恢复其执行。</p>
+<h4 id="Regenerator"><a href="#Regenerator" class="headerlink" title="Regenerator"></a>Regenerator</h4><p>上面这段代码等价下面代码：</p>
+<pre><code>var _marked = [maker].map(regeneratorRuntime.mark);
+
+function maker() {
+    var index;
+    return regeneratorRuntime.wrap(function maker$(_context) {
+        while (1) {
+            switch (_context.prev = _context.next) {
+                case 0:
+                    index = 0;
+
+                case 1:
+                    if (!(index &lt; 10)) {
+                        _context.next = 6;
+                        break;
+                    }
+
+                    _context.next = 4;
+                    return index++;
+
+                case 4:
+                    _context.next = 1;
+                    break;
+
+                case 6:
+                case &quot;end&quot;:
+                    return _context.stop();
+            }
+        }
+    }, _marked[0], this);
+}
+
+var g = maker();
+
+console.log(g.next().value); // 0
+console.log(g.next().value); // 1
+console.log(g.next().value); // 2
+</code></pre><p>编译机制造了一个状态机，通过_context.next状态的装换完成代码执行的挂起。<br>假设状态是0 -&gt; n（n是最后一个状态）<br>0运行第一个yield之前的所有代码，n运行最后一个yield函数之后的所有代码，generator的next尾调用通过一个while循环实现，如果_context.next到达最后一个case就退出循环，等待下一次next调用</p>
+<p>regenerator是用来生成generetor函数并返回一个迭代器供外界调用的高阶函数，功能主要是</p>
+<ul>
+<li>regenerator-transform： 重写generator函数把yield重写成switch case，并且创建_context.next保存上下文环境；</li>
+<li>包装generator函数被返回一个迭代器对象；</li>
+</ul>
+<p>经过wrap返回的迭代器：</p>
+<pre><code>GeneratorFunctionPrototype {
+    _invoke: function invoke(method, arg) { … }
+    __proto__: GeneratorFunctionPrototype {
+        constructor: function GeneratorFunctionPrototype() {},
+        next: function (arg) { … },
+        throw: function (arg) { … } 
+        …
+    }
+}
+</code></pre><p>当调用迭代器对象iter.next()方法时，因为有如下代码，所以会执行_invoke方法，而根据前面wrap方法代码可知，最终是调用了迭代器对象的 <code>makeInvokeMethod (innerFn, self, context);</code> 方法</p>
+<p>makeInvokeMethod方法内容较多，这里选取部分分析。</p>
+<pre><code>function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+    return function invoke(method, arg) {
+</code></pre><p>makeInvokeMethod返回invoke函数，当我们执行.next方法时，实际调用的是invoke方法中的下面语句</p>
+<pre><code>var record = tryCatch(innerFn, self, context);
+</code></pre><p>这里tryCatch方法中fn为经过转换后的example$方法，arg为上下文对象context,因为invoke函数内部对context的引用形成闭包引用，所以context上下文得以在迭代期间一直保持。</p>
+<pre><code>function tryCatch(fn, obj, arg) {
+    try {
+        return { type: &quot;normal&quot;, arg: fn.call(obj, arg) };
+    } catch (err) {
+        return { type: &quot;throw&quot;, arg: err };
+    }
+}
+</code></pre><p>tryCatch方法会实际调用 <code>example$</code> 方法，进入转换后的switch case,执行代码逻辑。如果得到的结果是一个普通类型的值，我们将它包装成一个可迭代对象格式，并且更新生成器状态至GenStateCompleted或者GenStateSuspendedYield</p>
+<pre><code>var record = tryCatch(innerFn, self, context);
+        if (record.type === &quot;normal&quot;) {
+        // If an exception is thrown from innerFn, we leave state ===
+        // GenStateExecuting and loop back for another invocation.
+        state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+        var info = {
+            value: record.arg,
+            done: context.done
+        };
+</code></pre><p>伪代码：</p>
+<pre><code>function wrap(innerFn, outerFn, self, tryLocsList) {
+    var protoGenerator = outerFn &amp;&amp; outerFn.prototype instanceof Generator
+        ? outerFn
+        : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+}
+
+function makeInvokeMethod(innerFn, self, context) {
+    var obj = this;
+    return function invoke(method, arg) {
+        context.method = method;
+        // 把next带入的arg参数赋值给sent
+        if (context.method === &quot;next&quot;) {
+            context.sent = context._sent = context.arg;
+        }
+        // 实际上调用了mark$，并且带入了context
+        var record = {
+            arg: innerFn.call(obj, context)
+        };
+        // 返回一个可以迭代的对象
+        return {value: record.arg, done: context.done};
+    };
+}
+
+// 用一个next调用invoke， 如果要进行下一步就传入next
+generator.next = next(arg) {
+    generator._invoke(&apos;next&apos;, arg);
+}
+</code></pre><h4 id="cojs处理generator过程"><a href="#cojs处理generator过程" class="headerlink" title="cojs处理generator过程"></a>cojs处理generator过程</h4><h5 id="thunk函数"><a href="#thunk函数" class="headerlink" title="thunk函数"></a>thunk函数</h5><p>能够得到一个函数的函数叫thunk函数， thunk函数是一个偏函数，它只带一个执行参数</p>
+<pre><code>function getThunk(number) {
+    return function (fn) {
+        setTimeout(() =&gt; {
+            if (number) {
+                fn(null, number);
+            } else {
+                const err = &quot;error open&quot;;
+                fn(err);
+            }
+        }, number)
+    }
+}
+</code></pre><h5 id="cojs-generator的自动执行器"><a href="#cojs-generator的自动执行器" class="headerlink" title="cojs-generator的自动执行器"></a>cojs-generator的自动执行器</h5><pre><code>import co from &apos;co&apos;;
+
+co(function * () {
+    var a = yield getThunk(100);
+    var b = yield getThunk(1000);
+    console.log(&apos;a:&apos;, a);
+    console.log(&apos;b:&apos;, b);
+    return [a, b];
+})
+
+// 输出
+// a 100
+// b 1000
+</code></pre><h5 id="cojs代码解析"><a href="#cojs代码解析" class="headerlink" title="cojs代码解析"></a>cojs代码解析</h5><pre><code>function co2Thunk(fn) {
+    return (done) =&gt; {
+        const ctx = this;
+        const g = fn.call(ctx);
+        function next(err, res) {
+            console.log(&apos;next1&apos;, res);
+            let it = g.next(res);
+            if (it.done) {
+                done.call(ctx, err, it.value);
+            } else {
+                it.value(next);
+            }
+        }
+        next();
+    }
+}
+
+co2Thunk(function * () {
+    var a = yield getThunk(10000);
+    var b = yield getThunk(1000);
+    // console.log(&apos;a:&apos;, a);
+    // console.log(&apos;b:&apos;, b);
+    return [a, b];
+})(function (err, args) {
+    console.log(&quot;callback thunk co : ==========&quot;);
+    // console.log(err, args);
+});
+</code></pre><p>co2Thunk的代码等价于：</p>
+<pre><code>function co2Thunk(fn) {
+    return (done) =&gt; {
+        const ctx = this;
+        const g = fn.call(ctx);
+        let it0 = g.next();
+        it0.value((err, res) =&gt; {
+            const it1 = g.next(res); // 第一次迭代返回的是getThunk(10000);
+            it0.value((err, res) =&gt; {
+                const it1 = g.next(res); // 第二次迭代返回的是getThunk(1000);
+                it1.value((err, res) =&gt; {
+                    const it2 = g.next(data);
+                    // ...
+                });
+            });
+        });
+    }
+}
+
+// it.value 等价于：
+function (fn) {
+    setTimeout(() =&gt; {
+        if (number) {
+            fn(null, number);
+        } else {
+            const err = &quot;error open&quot;;
+            fn(err);
+        }
+    }, number)
+}
+</code></pre><h5 id="promise版"><a href="#promise版" class="headerlink" title="promise版"></a>promise版</h5><pre><code>function co2Promise(fn) {
+    return new Promise((resolve, reject) =&gt; {
+        const ctx = this;
+        const g = fn.call(ctx);
+        function next(err, res) {
+            let it = g.next(res);
+            if (it.done) {
+                resolve(it.value);
+            } else {
+                it.value(next);
+            }
+        }
+        next();
+    });
+}
+
+co2Promise(function * () {
+    var a = yield getThunk(100);
+    var b = yield getThunk(1000);
+    console.log(&apos;a:&apos;, a);
+    console.log(&apos;b:&apos;, b);
+    return [a, b];
+}).then(function (args) {
+    console.log(&quot;callback promise co : ==========&quot;);
+    console.log(args);
+});
+</code></pre><h5 id="thunk升级版"><a href="#thunk升级版" class="headerlink" title="thunk升级版"></a>thunk升级版</h5><pre><code>function co2Thunk(fn) {
+    return (done) =&gt; {
+        const ctx = this;
+        const g = fn.call(ctx);
+        function next(err, res) {
+            let it = g.next(res);
+            if (it.done) {
+                done.call(ctx, err, it.value);
+            } else {
+                // 增加对其他类型的处理
+                const value = toThunk.call(ctx, it.value);
+                // 对于promise 此处应该是 value.then(next)
+                value(next);
+            }
+        }
+        next();
+    }
+}
+
+co2Thunk(function * () {
+    var a = getThunk(100);
+    var b = getThunk(1000);
+    // console.log(&apos;a:&apos;, a); console.log(&apos;b:&apos;, b);
+    return yield [a, b];
+})(function (err, args) {
+    console.log(&quot;callback thunk co : ==========&quot;);
+    console.log(err, args);
+});
+
+function toThunk(obj) {
+    if (isObject(obj) || isArray(obj)) {
+        return objectToThunk(obj);
+    }
+    if (isPromise(obj)) {
+        return promiseToThunk.call(ctx, obj);
+    }
+    return obj;
+}
+
+function objectToThunk(obj) {
+    return function (done) {
+        let keys = Object.keys(obj);
+        let length = keys.length;
+        let results = new obj.constructor();
+        for(let key in keys) {
+            const fn = toThunk(obj[key]);
+            fn((err, res) =&gt; {
+                results[key] = res;
+                --length || done(null, results);
+            }, key);
+        }
+    }
+}
+
+function promiseToThunk(promise){
+    return function(done){
+        promise.then(function(err,res){
+            done(err,res);
+        },done)
+    }
+}
+
+function isObject(obj) {
+    return obj &amp;&amp; Object == obj.constructor;
+}
+function isArray(obj) {
+    return Array.isArray(obj);
+}
+
+function isPromise(obj) {
+return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
+}
+</code></pre><h4 id="async-await"><a href="#async-await" class="headerlink" title="async/await"></a>async/await</h4><pre><code>async function fn(args){
+// ...
+}
+</code></pre><p>等同于</p>
+<pre><code>function fn(args){ 
+    return co2Thunk(function*() {
+        // ...
+    }); 
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/2017/08/03/hello-world/" itemprop="url">
                   Hello World
                 </a>
               
@@ -343,9 +1924,9 @@
             <span class="post-meta-item-icon">
               <i class="fa fa-calendar-o"></i>
             </span>
-            <span class="post-meta-item-text">Posted on</span>
-            <time itemprop="dateCreated" datetime="2016-10-17T20:13:53+08:00" content="2016-10-17">
-              2016-10-17
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:21:05+08:00" content="2017-08-03">
+              2017-08-03
             </time>
           </span>
 
@@ -444,16 +2025,16 @@
       <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="/blog/images/avatar.gif"
                alt="John Doe" />
           <p class="site-author-name" itemprop="name">John Doe</p>
           <p class="site-description motion-element" itemprop="description"></p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">2</span>
-              <span class="site-state-item-name">posts</span>
+            <a href="/blog/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">Artikel</span>
             </a>
           </div>
 
@@ -492,7 +2073,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -500,7 +2081,7 @@
 </div>
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
@@ -542,42 +2123,42 @@
 
 
   
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
-
-
-
-  
-  
-
-  
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.2"></script>
 
 
 
