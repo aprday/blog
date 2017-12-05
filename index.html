@@ -1,22 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 
 
 
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next muse use-motion">
 <head>
   <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
 
 
 
@@ -34,38 +27,45 @@
 
 
 
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
 
 
 
 
 
 
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
-
-
-
+<link href="/blog/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -77,97 +77,88 @@
 
 
 
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.2" />
+
+
+
+
 
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
 
 
 
-<script type="text/javascript" id="hexo.configurations">
+<script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/',
     scheme: 'Muse',
-    version: '5.1.3',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post"},
     fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    motion: true,
     duoshuo: {
       userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+      author: 'Author'
     }
   };
 </script>
 
 
 
+
   <link rel="canonical" href="http://yoursite.com/"/>
 
 
-
-
-
-  <title>Hexo</title>
-  
-
-
-
-
-
-
-
-
+  <title> Hexo </title>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="//schema.org/WebPage" lang="">
+
+  
+
+
+
+
+
+
+
+
+
 
   
   
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container one-collumn sidebar-position-left 
+   page-home 
+ ">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
 
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Hexo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
   </div>
+  <p class="site-subtitle"></p>
+</div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
 </div>
 
 <nav class="site-nav">
@@ -178,21 +169,31 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
+          <a href="/blog/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            首页
+            Startseite
           </a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
+          <a href="/blog/archives" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            归档
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
           </a>
         </li>
       
@@ -203,8 +204,6 @@
 
   
 </nav>
-
-
 
  </div>
     </header>
@@ -219,27 +218,13 @@
       
 
   
-
-  
-  
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/05/前端开发从刀耕火种到现代化/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sophia So Far">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -247,27 +232,27 @@
         
         
           <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 
-                <a class="post-title-link" href="/2017/12/05/前端开发从刀耕火种到现代化/" itemprop="url">前端开发从刀耕火种到现代化</a></h1>
+                <a class="post-title-link" href="/blog/2017/12/05/前端开发从刀耕火种到现代化/" itemprop="url">
+                  前端开发从刀耕火种到现代化
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-05T14:47:09+08:00">
-                2017-12-05
-              </time>
-            
-
-            
-
-            
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-12-05T14:47:09+08:00" content="2017-12-05">
+              2017-12-05
+            </time>
           </span>
 
           
@@ -277,21 +262,16 @@
           
 
           
+
+          
           
 
           
-
-          
-
-          
-
         </div>
       </header>
     
 
-    
-    
-    
+
     <div class="post-body" itemprop="articleBody">
 
       
@@ -348,7 +328,7 @@ $(body).html(html);
     &lt;li&gt;HTML&lt;/li&gt;
     &lt;li&gt;CSS&lt;/li&gt;
 &lt;/ul&gt;
-</code></pre><img src="/2017/12/05/前端开发从刀耕火种到现代化/1-9.png" title="页面 1 - 9">
+</code></pre><img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-9.png" alt="页面 1 - 9" title="页面 1 - 9">
 <p>到了收集数据阶段就需要不停的操作DOM来拉取用户输入的数据, 逻辑稍微一复杂,就会和渲染等逻辑发生冲突。</p>
 <p>原始的前端开发流程基本上是字符串模板编译数据，再进行render进行视图切换，然后手动操作DOM更新和事件绑定, 用户操作后进行数据拉取再用字符串编译数据。</p>
 <p>事实上，流程虽然简单但是工作量却巨大，因为主要工作都集中在手动操作DOM，再加上js充满异步回调，什么时候拉取数据，什么时候更新很难把握。</p>
@@ -405,12 +385,12 @@ new Vue({
         ]
     }
 });
-</code></pre><img src="/2017/12/05/前端开发从刀耕火种到现代化/1-1.png" title="页面 1 - 1">
+</code></pre><img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-1.png" alt="页面 1 - 1" title="页面 1 - 1">
 <p>这样会有两个问题，</p>
 <pre><code>1. 如果我只改变 `message` 会导致整个页面的重新渲染, 但是理想状态是我只想渲染数据改变的部分(红色)
 2. 随着逻辑的增加, 代码会越来越长，页面马上会变得无法维护
-</code></pre><img src="/2017/12/05/前端开发从刀耕火种到现代化/1-2.png" title="页面 1 - 2">
-<img src="/2017/12/05/前端开发从刀耕火种到现代化/1-3.png" title="页面 1 - 3">
+</code></pre><img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-2.png" alt="页面 1 - 2" title="页面 1 - 2">
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-3.png" alt="页面 1 - 3" title="页面 1 - 3">
 <p>如果把数据按照渲染的部分进行分组, 渲染的部分单独分离出来一个文件，现在文件中包含这个模块需要的数据和事件逻辑，他称之为一个 <code>组件</code></p>
 <p>programe组件</p>
 <pre><code>// programe组件
@@ -462,13 +442,13 @@ new Vue({
 &lt;/script&gt;
 </code></pre><p>划分模块可以帮助我们清晰的分离组织和代码逻辑单元, 封装可重用的代码，但是 <code>组件的作用域是独立的</code>, 会带来数据传递的问题 </p>
 <h3 id="数据传递"><a href="#数据传递" class="headerlink" title="数据传递"></a>数据传递</h3><p>有一个需求把programe部分的数据，导入到message中</p>
-<img src="/2017/12/05/前端开发从刀耕火种到现代化/1-4.png" title="页面 1 - 4">
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-4.png" alt="页面 1 - 4" title="页面 1 - 4">
 <p>组件设计初衷就是要配合使用的，最常见的就是形成父子组件的关系：组件 A 在它的模板中使用了组件 B。它们之间必然需要相互通信：父组件可能要给子组件下发数据，子组件则可能要将它内部发生的事情告知父组件。比如vue中父子组件的关系可以总结为 prop 向下传递，事件向上传递。父组件通过 prop 给子组件下发数据，子组件通过事件给父组件发送消息。</p>
-<img src="/2017/12/05/前端开发从刀耕火种到现代化/1-6.png" title="页面 1 - 6">
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-6.png" alt="页面 1 - 6" title="页面 1 - 6">
 <p>如果在兄弟组件间传递消息则需要先把消息传递到共同的父组件中，然后再把父组件的消息向下传递</p>
-<img src="/2017/12/05/前端开发从刀耕火种到现代化/1-6.png" title="页面 1 - 6">
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-6.png" alt="页面 1 - 6" title="页面 1 - 6">
 <p>所以上述需求的需要先增加共同的父子组件然后再进行消息传递</p>
-<img src="/2017/12/05/前端开发从刀耕火种到现代化/1-5.png" title="页面 1 - 5">
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-5.png" alt="页面 1 - 5" title="页面 1 - 5">
 <p>根组件</p>
 <pre><code>// 创建根实例
 &lt;template&gt;
@@ -518,7 +498,7 @@ const vmA = new Vue({
 const vmB = new Vue({
 data: sourceOfTruth
 })
-</code></pre><img src="/2017/12/05/前端开发从刀耕火种到现代化/1-8.png" title="页面 1 - 8">
+</code></pre><img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-8.png" alt="页面 1 - 8" title="页面 1 - 8">
 <p>我们使用bus作为事件传递者，每次事件的触发都可以修改sourceOfTruth中的数据，来简化组件间数据传递的繁琐。</p>
 <p>这个Vue 实例只是简单的代理访问。所以，如果你有一处需要被多个实例间共享的状态，可以简单地通过维护一份数据来实现共享，现在我们有了唯一的实际来源，但是，调试将会变为噩梦。任何时间，我们应用中的任何部分，在任何数据改变后，都不会留下变更过的记录。</p>
 <p>为了控制数据存储，vue提供了一个简单的模式</p>
@@ -623,19 +603,16 @@ data: sourceOfTruth
         
       
     </div>
-    
-    
-    
 
-    
+    <div>
+      
+    </div>
 
-    
-
-    
+    <div>
+      
+    </div>
 
     <footer class="post-footer">
-      
-
       
 
       
@@ -645,10 +622,6 @@ data: sourceOfTruth
         <div class="post-eof"></div>
       
     </footer>
-  </div>
-  
-  
-  
   </article>
 
 
@@ -656,27 +629,13 @@ data: sourceOfTruth
       
 
   
-
-  
-  
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/webpack2编译过程最佳实践/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sophia So Far">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -684,27 +643,27 @@ data: sourceOfTruth
         
         
           <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 
-                <a class="post-title-link" href="/2017/08/03/webpack2编译过程最佳实践/" itemprop="url">webpack2编译过程最佳实践</a></h1>
+                <a class="post-title-link" href="/blog/2017/08/03/webpack2编译过程最佳实践/" itemprop="url">
+                  webpack2编译过程最佳实践
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T11:56:13+08:00">
-                2017-08-03
-              </time>
-            
-
-            
-
-            
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:56:13+08:00" content="2017-08-03">
+              2017-08-03
+            </time>
           </span>
 
           
@@ -714,21 +673,16 @@ data: sourceOfTruth
           
 
           
+
+          
           
 
           
-
-          
-
-          
-
         </div>
       </header>
     
 
-    
-    
-    
+
     <div class="post-body" itemprop="articleBody">
 
       
@@ -745,149 +699,27 @@ data: sourceOfTruth
 <h3 id="打包过程"><a href="#打包过程" class="headerlink" title="打包过程"></a>打包过程</h3><p>开发环境<br>开发环境下，先由dll打包公共模块，再由dev打包源码，并把dll映射载入，这样每次修改源码，webpack只打包修改的部分，大大节省了编译时间</p>
 <p>构建环境<br>由CommonsChunkPlugin打包公共模块</p>
 <h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><p>dll编译过程</p>
-<img src="/2017/08/03/webpack2编译过程最佳实践/PastedGraphic1.jpg" title="PastedGraphic1">
+<img src="/blog/2017/08/03/webpack2编译过程最佳实践/PastedGraphic1.jpg" alt="PastedGraphic1" title="PastedGraphic1">
 <p>打包源码过程</p>
-<img src="/2017/08/03/webpack2编译过程最佳实践/PastedGraphic2.jpg" title="PastedGraphic2">
+<img src="/blog/2017/08/03/webpack2编译过程最佳实践/PastedGraphic2.jpg" alt="PastedGraphic2" title="PastedGraphic2">
 <p>通过CommonsChunkPlugin打包过程</p>
-<img src="/2017/08/03/webpack2编译过程最佳实践/PastedGraphic3.jpg" title="PastedGraphic3">
+<img src="/blog/2017/08/03/webpack2编译过程最佳实践/PastedGraphic3.jpg" alt="PastedGraphic3" title="PastedGraphic3">
 <p>由上可知，在两边的vendor文件同样大小的情况下，DllPlugin每次编译时间是CommonsChunkPlugin 1/3左右，刨除dll单独打包时间影响，再只改动源码的条件下，DllPlugin编译时间约为CommonsChunkPlugin 1/10</p>
 
           
         
       
     </div>
-    
-    
-    
 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/AST树构建函数式编程语言/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sophia So Far">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/03/AST树构建函数式编程语言/" itemprop="url">AST树构建函数式编程语言</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T11:46:13+08:00">
-                2017-08-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="css等比例图片"><a href="#css等比例图片" class="headerlink" title="css等比例图片"></a>css等比例图片</h3>
-          
-        
+    <div>
       
     </div>
-    
-    
-    
 
-    
-
-    
-
-    
+    <div>
+      
+    </div>
 
     <footer class="post-footer">
-      
-
       
 
       
@@ -897,10 +729,6 @@ data: sourceOfTruth
         <div class="post-eof"></div>
       
     </footer>
-  </div>
-  
-  
-  
   </article>
 
 
@@ -908,27 +736,13 @@ data: sourceOfTruth
       
 
   
-
-  
-  
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/使用css构造等比例布局/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sophia So Far">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -936,27 +750,27 @@ data: sourceOfTruth
         
         
           <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 
-                <a class="post-title-link" href="/2017/08/03/使用css构造等比例布局/" itemprop="url">使用css构造等比例布局</a></h1>
+                <a class="post-title-link" href="/blog/2017/08/03/使用css构造等比例布局/" itemprop="url">
+                  使用css构造等比例布局
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T11:46:13+08:00">
-                2017-08-03
-              </time>
-            
-
-            
-
-            
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:46:13+08:00" content="2017-08-03">
+              2017-08-03
+            </time>
           </span>
 
           
@@ -966,21 +780,16 @@ data: sourceOfTruth
           
 
           
+
+          
           
 
           
-
-          
-
-          
-
         </div>
       </header>
     
 
-    
-    
-    
+
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1019,19 +828,16 @@ position: relative;
         
       
     </div>
-    
-    
-    
 
-    
+    <div>
+      
+    </div>
 
-    
-
-    
+    <div>
+      
+    </div>
 
     <footer class="post-footer">
-      
-
       
 
       
@@ -1041,10 +847,6 @@ position: relative;
         <div class="post-eof"></div>
       
     </footer>
-  </div>
-  
-  
-  
   </article>
 
 
@@ -1052,27 +854,13 @@ position: relative;
       
 
   
-
-  
-  
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/深入解析Vue源码/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sophia So Far">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -1080,27 +868,27 @@ position: relative;
         
         
           <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 
-                <a class="post-title-link" href="/2017/08/03/深入解析Vue源码/" itemprop="url">深入解析Vue源码</a></h1>
+                <a class="post-title-link" href="/blog/2017/08/03/AST树构建函数式编程语言/" itemprop="url">
+                  AST树构建函数式编程语言
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T11:37:25+08:00">
-                2017-08-03
-              </time>
-            
-
-            
-
-            
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:46:13+08:00" content="2017-08-03">
+              2017-08-03
+            </time>
           </span>
 
           
@@ -1110,21 +898,109 @@ position: relative;
           
 
           
+
+          
           
 
           
-
-          
-
-          
-
         </div>
       </header>
     
 
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="css等比例图片"><a href="#css等比例图片" class="headerlink" title="css等比例图片"></a>css等比例图片</h3>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/blog/2017/08/03/深入解析Vue源码/" itemprop="url">
+                  深入解析Vue源码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:37:25+08:00" content="2017-08-03">
+              2017-08-03
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
     
+
+
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1871,19 +1747,16 @@ export default class Vue {
         
       
     </div>
-    
-    
-    
 
-    
+    <div>
+      
+    </div>
 
-    
-
-    
+    <div>
+      
+    </div>
 
     <footer class="post-footer">
-      
-
       
 
       
@@ -1893,10 +1766,6 @@ export default class Vue {
         <div class="post-eof"></div>
       
     </footer>
-  </div>
-  
-  
-  
   </article>
 
 
@@ -1904,27 +1773,13 @@ export default class Vue {
       
 
   
-
-  
-  
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/异步编程解决方案-generator/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sophia So Far">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -1932,27 +1787,27 @@ export default class Vue {
         
         
           <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 
-                <a class="post-title-link" href="/2017/08/03/异步编程解决方案-generator/" itemprop="url">异步编程解决方案 - generator</a></h1>
+                <a class="post-title-link" href="/blog/2017/08/03/异步编程解决方案-generator/" itemprop="url">
+                  异步编程解决方案 - generator
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T11:32:43+08:00">
-                2017-08-03
-              </time>
-            
-
-            
-
-            
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:32:43+08:00" content="2017-08-03">
+              2017-08-03
+            </time>
           </span>
 
           
@@ -1962,21 +1817,16 @@ export default class Vue {
           
 
           
+
+          
           
 
           
-
-          
-
-          
-
         </div>
       </header>
     
 
-    
-    
-    
+
     <div class="post-body" itemprop="articleBody">
 
       
@@ -2527,19 +2377,16 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
         
       
     </div>
-    
-    
-    
 
-    
+    <div>
+      
+    </div>
 
-    
-
-    
+    <div>
+      
+    </div>
 
     <footer class="post-footer">
-      
-
       
 
       
@@ -2549,10 +2396,6 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
         <div class="post-eof"></div>
       
     </footer>
-  </div>
-  
-  
-  
   </article>
 
 
@@ -2560,27 +2403,13 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
       
 
   
-
-  
-  
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/hello-world/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sophia So Far">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
 
     
       <header class="post-header">
@@ -2588,27 +2417,27 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
         
         
           <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 
-                <a class="post-title-link" href="/2017/08/03/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/blog/2017/08/03/hello-world/" itemprop="url">
+                  Hello World
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T11:21:05+08:00">
-                2017-08-03
-              </time>
-            
-
-            
-
-            
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-08-03T11:21:05+08:00" content="2017-08-03">
+              2017-08-03
+            </time>
           </span>
 
           
@@ -2618,21 +2447,16 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
           
 
           
+
+          
           
 
           
-
-          
-
-          
-
         </div>
       </header>
     
 
-    
-    
-    
+
     <div class="post-body" itemprop="articleBody">
 
       
@@ -2655,19 +2479,16 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
         
       
     </div>
-    
-    
-    
 
-    
+    <div>
+      
+    </div>
 
-    
-
-    
+    <div>
+      
+    </div>
 
     <footer class="post-footer">
-      
-
       
 
       
@@ -2677,10 +2498,6 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
         <div class="post-eof"></div>
       
     </footer>
-  </div>
-  
-  
-  
   </article>
 
 
@@ -2709,67 +2526,54 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
   </div>
 
   <aside id="sidebar" class="sidebar">
-    
     <div class="sidebar-inner">
 
       
 
       
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Sophia So Far</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">7</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">标签</span>
-                
-              </div>
-            
-
-          </nav>
-
-          
-
-          <div class="links-of-author motion-element">
-            
-          </div>
-
-          
-          
-
-          
-          
-
-          
-
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="John Doe" />
+          <p class="site-author-name" itemprop="name">John Doe</p>
+          <p class="site-description motion-element" itemprop="description"></p>
         </div>
-      </section>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
 
-      
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
 
       
 
@@ -2783,48 +2587,36 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Sophia So Far</span>
-
+        <div class="copyright" >
   
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
 </div>
 
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
-
-
-
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
 
         
-
-
-
-
-
-
 
         
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
   </div>
 
   
@@ -2847,40 +2639,31 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
 
 
 
-
-
-
-
-
-
-
-
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
   
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.2"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.2"></script>
 
 
 
@@ -2892,21 +2675,11 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.2"></script>
 
 
 
   
-
-
-  
-
-
-
-
-	
-
-
 
 
 
@@ -2915,22 +2688,7 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
 
 
 
-
   
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
   
 
   
@@ -2939,9 +2697,6 @@ return obj &amp;&amp; &apos;function&apos; == typeof obj.then;
 
   
 
-  
-
-  
 
 </body>
 </html>
