@@ -1,7 +1,7 @@
 ---
 title: 使用css构造等比例布局
 date: 2017-08-03 11:46:13
-tags:
+tags: Javascript
 ---
 
 ### css等比例图片

@@ -1,7 +1,7 @@
 ---
 title: 异步编程解决方案 - generator
 date: 2017-08-03 11:32:43
-tags:
+tags: Javascript
 ---
 
 

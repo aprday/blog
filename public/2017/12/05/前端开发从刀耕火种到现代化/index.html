@@ -1,0 +1,878 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/blog/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="刀耕火种从诞生起前端开发的重心就在操作DOM，这个阶段前端开源库基本都是基于DOM API的封装比如jquery。在前后端交互的过程中, 前端的主要工作是把后端获取的数据渲染到页面上和把用户操作之后的数据收集起来 例如，在页面上渲染一个列表 {     programe: [         {language: &amp;quot;JavaScript&amp;quot;},         {language">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端开发从刀耕火种到现代化">
+<meta property="og:url" content="http://yoursite.com/2017/12/05/前端开发从刀耕火种到现代化/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="刀耕火种从诞生起前端开发的重心就在操作DOM，这个阶段前端开源库基本都是基于DOM API的封装比如jquery。在前后端交互的过程中, 前端的主要工作是把后端获取的数据渲染到页面上和把用户操作之后的数据收集起来 例如，在页面上渲染一个列表 {     programe: [         {language: &amp;quot;JavaScript&amp;quot;},         {language">
+<meta property="og:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-9.png">
+<meta property="og:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-1.png">
+<meta property="og:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-2.png">
+<meta property="og:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-3.png">
+<meta property="og:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-4.png">
+<meta property="og:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-6.png">
+<meta property="og:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-6.png">
+<meta property="og:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-5.png">
+<meta property="og:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-8.png">
+<meta property="og:updated_time" content="2017-12-05T07:16:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端开发从刀耕火种到现代化">
+<meta name="twitter:description" content="刀耕火种从诞生起前端开发的重心就在操作DOM，这个阶段前端开源库基本都是基于DOM API的封装比如jquery。在前后端交互的过程中, 前端的主要工作是把后端获取的数据渲染到页面上和把用户操作之后的数据收集起来 例如，在页面上渲染一个列表 {     programe: [         {language: &amp;quot;JavaScript&amp;quot;},         {language">
+<meta name="twitter:image" content="http://yoursite.com/blog/2017/12/05/前端开发从刀耕火种到现代化/1-9.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/05/前端开发从刀耕火种到现代化/"/>
+
+
+  <title> 前端开发从刀耕火种到现代化 | Hexo </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/blog/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Hexo</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Startseite
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archiv
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端开发从刀耕火种到现代化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Veröffentlicht am</span>
+            <time itemprop="dateCreated" datetime="2017-12-05T14:47:09+08:00" content="2017-12-05">
+              2017-12-05
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="刀耕火种"><a href="#刀耕火种" class="headerlink" title="刀耕火种"></a>刀耕火种</h2><p>从诞生起前端开发的重心就在操作DOM，这个阶段前端开源库基本都是基于DOM API的封装比如jquery。<br>在前后端交互的过程中, 前端的主要工作是把后端获取的数据渲染到页面上和把用户操作之后的数据收集起来</p>
+<p>例如，在页面上渲染一个列表</p>
+<pre><code>{
+    programe: [
+        {language: &quot;JavaScript&quot;},
+        {language: &quot;HTML&quot;},
+        {language: &quot;CSS&quot;}
+    ]
+}
+</code></pre><p>使用原始的方式</p>
+<pre><code>var str = &apos;&lt;ul&gt;&apos;;
+for(var i = 0; i &lt;= programe.length; i ++) {
+    str += &apos;&lt;li&gt;&apos; + programe[i].language + &apos;&lt;/li&gt;&apos;
+}
+str += &apos;&lt;/ul&gt;&apos;;
+$(body).html(str);
+</code></pre><p>随着页面逻辑增加，渲染部分往往单独抽取出来作为工具使用</p>
+<pre><code>function getList(list) {
+    var str = &apos;&lt;ul&gt;&apos;;
+    for(var i = 0; i &lt;= list.length; i ++) {
+        str += &apos;&lt;li&gt;&apos; + list[i].language + &apos;&lt;/li&gt;&apos;
+    }
+    str += &apos;&lt;/ul&gt;&apos;;
+    return str;
+}
+
+const list = getList(programe);
+$(body).html(list);
+</code></pre><p>抽取出来的这个函数称之为模板, 把模板中的字符串处理逻辑用一些语法来代替, 使用起来更方便， 逻辑也更顺畅, 比如handlebars的语法</p>
+<pre><code>// source
+&lt;ul&gt;  
+{{#programe}}
+    &lt;li&gt;{{language}}&lt;/li&gt;
+{{/programe}}
+&lt;/ul&gt;
+
+//预编译模板
+var template = Handlebars.compile(source);
+//匹配json内容
+var html = template(programe);
+//输入模板
+$(body).html(html);
+</code></pre><p>上面的结果都是</p>
+<pre><code>&lt;ul&gt;  
+    &lt;li&gt;JavaScript&lt;/li&gt;
+    &lt;li&gt;HTML&lt;/li&gt;
+    &lt;li&gt;CSS&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-9.png" alt="页面 1 - 9" title="页面 1 - 9">
+<p>到了收集数据阶段就需要不停的操作DOM来拉取用户输入的数据, 逻辑稍微一复杂,就会和渲染等逻辑发生冲突。</p>
+<p>原始的前端开发流程基本上是字符串模板编译数据，再进行render进行视图切换，然后手动操作DOM更新和事件绑定, 用户操作后进行数据拉取再用字符串编译数据。</p>
+<p>事实上，流程虽然简单但是工作量却巨大，因为主要工作都集中在手动操作DOM，再加上js充满异步回调，什么时候拉取数据，什么时候更新很难把握。</p>
+<h2 id="工业革命"><a href="#工业革命" class="headerlink" title="工业革命"></a>工业革命</h2><p>把模板操作提取出来使用数据驱动模板的更新，对于使用方来说，react和vue的不同在于用户修改数据时如何收集数据</p>
+<pre><code>1. react - 开发者由监听事件来改变数据
+
+2. vue - 主动触发数据的改变
+</code></pre><p>相同之处在于数据的更改都可以触发模板的渲染。</p>
+<p>数据与DOM的绑定关系以vue为例</p>
+<pre><code>// 创建实例
+new Vue({
+    el: &apos;#example&apos;,
+    data: {
+        name: &apos;qiuyu&apos;,
+        password: 123456,
+    }
+});
+</code></pre><p>–&gt;</p>
+<pre><code>&lt;form id=&quot;example&quot;&gt;
+    &lt;input :v-model=&quot;name&quot;&gt;
+    &lt;input :v-model=&quot;password&quot;&gt;
+&lt;/form&gt;
+</code></pre><p>数据和模板是实时同步的</p>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><p>Vue和React把开发者的关注点从DOM操作转移到数据更新，这时开发者会有一个概念：</p>
+<pre><code>数据就是页面, 数据页面合一
+</code></pre><p>所以数据结构和数据如何分割就变得非常重要。</p>
+<p>如果有一个页面</p>
+<pre><code>// 创建根实例
+&lt;div id=&quot;example&quot;&gt;
+    &lt;ul&gt;
+        &lt;li v-for=&quot;(item, index) in programe&quot;&gt;
+            {{item.language}}
+        &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;ul&gt;
+        &lt;li v-for=&quot;(item, index) in message&quot;&gt;
+            {{item.message}}
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/div&gt;
+
+new Vue({
+    el: &apos;#example&apos;,
+    data:     {
+        programe: [
+            {language: &quot;JavaScript&quot;},
+            {language: &quot;HTML&quot;},
+            {language: &quot;CSS&quot;}
+        ],
+        message: [
+            {value: &quot;JavaScript&quot;},
+            {value: &quot;HTML&quot;},
+            {value: &quot;CSS&quot;}
+        ]
+    }
+});
+</code></pre><img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-1.png" alt="页面 1 - 1" title="页面 1 - 1">
+<p>这样会有两个问题，</p>
+<pre><code>1. 如果我只改变 `message` 会导致整个页面的重新渲染, 但是理想状态是我只想渲染数据改变的部分(红色)
+2. 随着逻辑的增加, 代码会越来越长，页面马上会变得无法维护
+</code></pre><img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-2.png" alt="页面 1 - 2" title="页面 1 - 2">
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-3.png" alt="页面 1 - 3" title="页面 1 - 3">
+<p>如果把数据按照渲染的部分进行分组, 渲染的部分单独分离出来一个文件，现在文件中包含这个模块需要的数据和事件逻辑，他称之为一个 <code>组件</code></p>
+<p>programe组件</p>
+<pre><code>// programe组件
+&lt;template&gt;
+    &lt;ul&gt;
+        &lt;li v-for=&quot;(item, index) in programe&quot;&gt;
+            {{item.language}}
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    const programeComponent = new Vue({
+        data: function () {
+            return {
+                programe: [
+                    {language: &quot;JavaScript&quot;},
+                    {language: &quot;HTML&quot;},
+                    {language: &quot;CSS&quot;}
+                ]
+            }
+        }
+        // 逻辑代码
+        ...
+    });
+&lt;/script&gt;
+</code></pre><p>message组件</p>
+<pre><code>// message组件
+&lt;template&gt;
+    &lt;ul&gt;
+        &lt;li v-for=&quot;(item, index) in message&quot;&gt;
+            {{item.value}}
+        &lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    const messageComponent = new Vue({
+        data: function () {
+            return {
+                message: [
+                    {value: &quot;JavaScript&quot;},
+                    {value: &quot;HTML&quot;},
+                    {value: &quot;CSS&quot;}
+                ]
+            }
+        }
+        // 逻辑代码
+        ...
+    });
+&lt;/script&gt;
+</code></pre><p>划分模块可以帮助我们清晰的分离组织和代码逻辑单元, 封装可重用的代码，但是 <code>组件的作用域是独立的</code>, 会带来数据传递的问题 </p>
+<h3 id="数据传递"><a href="#数据传递" class="headerlink" title="数据传递"></a>数据传递</h3><p>有一个需求把programe部分的数据，导入到message中</p>
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-4.png" alt="页面 1 - 4" title="页面 1 - 4">
+<p>组件设计初衷就是要配合使用的，最常见的就是形成父子组件的关系：组件 A 在它的模板中使用了组件 B。它们之间必然需要相互通信：父组件可能要给子组件下发数据，子组件则可能要将它内部发生的事情告知父组件。比如vue中父子组件的关系可以总结为 prop 向下传递，事件向上传递。父组件通过 prop 给子组件下发数据，子组件通过事件给父组件发送消息。</p>
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-6.png" alt="页面 1 - 6" title="页面 1 - 6">
+<p>如果在兄弟组件间传递消息则需要先把消息传递到共同的父组件中，然后再把父组件的消息向下传递</p>
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-6.png" alt="页面 1 - 6" title="页面 1 - 6">
+<p>所以上述需求的需要先增加共同的父子组件然后再进行消息传递</p>
+<img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-5.png" alt="页面 1 - 5" title="页面 1 - 5">
+<p>根组件</p>
+<pre><code>// 创建根实例
+&lt;template&gt;
+    &lt;Message :props=&quot;commonMsg&quot;/&gt;
+    &lt;Programe @getCommonMsg=&quot;getCommonMsg&quot;&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    const rootComponent = new Vue({
+        componets: {
+            Message,
+            Programe
+        },
+        data: function () {
+            return {
+                commonMsg: &apos;&apos;
+            }
+        },
+        methods: {
+            getCommonMsg(msg) {
+                this.commonMsg = msg;
+            }
+        }
+        // 逻辑代码
+        ...
+    });
+&lt;/script&gt;
+</code></pre><p>但是，当我们的应用遇到多个组件需要传递数据时，数据流很容易变得复杂：</p>
+<pre><code>1. 传参的方法对于多层嵌套的组件将会非常繁琐，并且对于兄弟组件间的状态传递无能为力
+2. 我们经常会采用父子组件直接引用或者通过事件来变更和同步状态的多份拷贝。
+</code></pre><p>以上的这些模式非常脆弱，通常会导致无法维护的代码。</p>
+<p>因此，我们为什么不把组件的共享状态抽取出来，以一个全局单例模式管理呢？在这种模式下，我们的组件树构成了一个巨大的“视图”，不管在树的哪个位置，任何组件都能获取状态或者触发行为！<br>另外，通过定义和隔离状态管理中的各种概念并强制遵守一定的规则，我们的代码将会变得更结构化且易维护</p>
+<h3 id="事件总线和Vuex"><a href="#事件总线和Vuex" class="headerlink" title="事件总线和Vuex"></a>事件总线和Vuex</h3><p>在简单的场景下，可以使用一个空的 Vue 实例作为状态的管理器，称之为事件总线。</p>
+<pre><code>var bus = new Vue()
+// 触发组件 A 中的事件
+bus.$emit(&apos;id-selected&apos;, 1)
+// 在组件 B 创建的钩子中监听事件
+bus.$on(&apos;id-selected&apos;, function (id) {
+// ...
+})
+
+const sourceOfTruth = {}
+
+const vmA = new Vue({
+    data: sourceOfTruth
+})
+
+const vmB = new Vue({
+data: sourceOfTruth
+})
+</code></pre><img src="/blog/2017/12/05/前端开发从刀耕火种到现代化/1-8.png" alt="页面 1 - 8" title="页面 1 - 8">
+<p>我们使用bus作为事件传递者，每次事件的触发都可以修改sourceOfTruth中的数据，来简化组件间数据传递的繁琐。</p>
+<p>这个Vue 实例只是简单的代理访问。所以，如果你有一处需要被多个实例间共享的状态，可以简单地通过维护一份数据来实现共享，现在我们有了唯一的实际来源，但是，调试将会变为噩梦。任何时间，我们应用中的任何部分，在任何数据改变后，都不会留下变更过的记录。</p>
+<p>为了控制数据存储，vue提供了一个简单的模式</p>
+<pre><code>var store = {
+    state: {
+        message: &apos;Hello!&apos;
+    },
+    setMessage (newValue) {
+        this.state.message = newValue
+    },
+    getMessage () {
+        return this.state.message
+    }
+}
+</code></pre><p>我们在调用setMessage和getMessage时，生成内存快照，来查看是那些行为改变了那些数据</p>
+<p>这个模式对getter方法是没有问题的，但是对于setter方法，因为数据的来源分为两部分</p>
+<pre><code>1. 页面上收集的同步数据
+2. 后端存取的异步数据
+</code></pre><p>setter是无法监测到异步数据的，这样生成的内存快照肯定不正确</p>
+<p>所以我们在setter中只能写同步代码，而无法使用异步代码</p>
+<p>一个完整的vuex实例应该是</p>
+<pre><code>const store = new Vuex.Store({
+    state: {
+        message: &apos;Hello!&apos;
+    },
+    // getter 集合
+    getters: {
+        getMessage: state =&gt; {
+            return state.message;
+        }
+    },
+    // setter 集合
+    mutations: {
+        setMessage (state, newValue) {
+            // 变更状态
+            state.message = newValue;
+        }
+    },
+    actions: {
+        setMessageAsync (context, newValue) {
+            setTimeout(() =&gt; {
+                context.commit(&apos;setMessage&apos;, newValue)
+            });
+        }
+    }
+});
+</code></pre><p>我们在actions中书写异步代码，在回调成功后再调用setter可以保证setter部分的代码是同步调用的</p>
+<p>最后把store和组件绑定</p>
+<pre><code>&lt;template&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;p&gt;{{ message }}&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    new Vue({
+        el: &apos;#app&apos;,
+        computed: {
+            ...mapGetters([
+                &apos;getMessage&apos;,
+                // ...
+            ])
+        },
+        methods: {
+            setMessage () {
+                store.commit(&apos;setMessageAsync&apos;, &apos;World!&apos;)
+            }
+        }
+    });
+&lt;/script&gt;
+</code></pre><h3 id="上帝模式"><a href="#上帝模式" class="headerlink" title="上帝模式"></a>上帝模式</h3><p>虽然 Vuex 可以帮助我们管理共享状态，但也附带了更多的概念和框架。这需要对短期和长期效益进行权衡。</p>
+<p>直接使用 Vuex 可能是繁琐冗余的，借助Tifa我们可以以更简单的方式返回一个store:</p>
+<pre><code>const store = new Vuex.Store({
+    state: {
+        message: &apos;Hello!&apos;
+    },
+    // 直接书写异步代码
+    setMessageAsync (context, newValue) {
+        setTimeout(() =&gt; {
+            context.commit(&apos;message&apos;, newValue)
+        });
+    }
+});
+</code></pre><p>组件</p>
+<pre><code>&lt;template&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;p&gt;{{ message }}&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    new Vue(connet({
+        el: &apos;#app&apos;,
+        methods: {
+            setMessage () {
+                store.commit(&apos;setMessageAsync&apos;, &apos;World!&apos;)
+            }
+        }
+    }));
+&lt;/script&gt;
+</code></pre><p>Tifa暴露了基本的api，没有任何新的概念并且把vuex的所有概念封装在黑盒中，降低了编辑和学习成本</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2017/08/03/webpack2编译过程最佳实践/" rel="next" title="webpack2编译过程最佳实践">
+                <i class="fa fa-chevron-left"></i> webpack2编译过程最佳实践
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/blog/images/avatar.gif"
+               alt="John Doe" />
+          <p class="site-author-name" itemprop="name">John Doe</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/blog/archives">
+              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-name">Artikel</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/blog/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">Tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#刀耕火种"><span class="nav-number">1.</span> <span class="nav-text">刀耕火种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工业革命"><span class="nav-number">2.</span> <span class="nav-text">工业革命</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模块化"><span class="nav-number">2.1.</span> <span class="nav-text">模块化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据传递"><span class="nav-number">2.2.</span> <span class="nav-text">数据传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件总线和Vuex"><span class="nav-number">2.3.</span> <span class="nav-text">事件总线和Vuex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上帝模式"><span class="nav-number">2.4.</span> <span class="nav-text">上帝模式</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+
+<div class="powered-by">
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
